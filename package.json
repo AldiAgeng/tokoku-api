@@ -1,0 +1,25 @@
+{
+  "name": "secondhand-api",
+  "version": "1.0.0",
+  "main": "app/index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node bin/www",
+    "develop": "nodemon -q bin/www",
+    "db:create": "./node_modules/.bin/sequelize-cli db:create",
+    "db:drop": "./node_modules/.bin/sequelize-cli db:drop",
+    "db:migrate": "./node_modules/.bin/sequelize-cli db:migrate",
+    "db:rollback": "./node_modules/.bin/sequelize-cli db:migrate:undo",
+    "db:seed": "./node_modules/.bin/sequelize-cli db:seed:all"
+  },
+  "dependencies": {
+    "express": "^4.17.3",
+    "morgan": "^1.10.0",
+    "pg": "^8.7.3",
+    "sequelize": "^6.18.0",
+    "sequelize-cli": "^6.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
