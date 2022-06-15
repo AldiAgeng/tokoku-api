@@ -6,11 +6,17 @@
   "scripts": {
     "start": "node bin/www",
     "develop": "nodemon -q bin/www",
+    "test": "jest",
     "db:create": "./node_modules/.bin/sequelize-cli db:create",
     "db:drop": "./node_modules/.bin/sequelize-cli db:drop",
     "db:migrate": "./node_modules/.bin/sequelize-cli db:migrate",
     "db:rollback": "./node_modules/.bin/sequelize-cli db:migrate:undo",
-    "db:seed": "./node_modules/.bin/sequelize-cli db:seed:all"
+    "db:seed": "./node_modules/.bin/sequelize-cli db:seed:all",
+    "db:create:test": "./node_modules/.bin/sequelize-cli db:create --env test",
+    "db:drop:test": "./node_modules/.bin/sequelize-cli db:drop --env test",
+    "db:migrate:test": "./node_modules/.bin/sequelize-cli db:migrate --env test",
+    "db:rollback:test": "./node_modules/.bin/sequelize-cli db:migrate:undo --env test",
+    "db:seed:test": "./node_modules/.bin/sequelize-cli db:seed:all --env test"
   },
   "dependencies": {
     "express": "^4.17.3",
@@ -20,6 +26,10 @@
     "sequelize-cli": "^6.4.1"
   },
   "devDependencies": {
+    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "jest": "^28.1.1",
     "nodemon": "^2.0.15"
   }
 }

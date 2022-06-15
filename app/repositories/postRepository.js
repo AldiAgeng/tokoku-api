@@ -14,7 +14,11 @@ module.exports = {
   },
 
   delete(id) {
-    return Post.destroy(id);
+    return Post.destroy({
+      where: {
+        id,
+      },
+    });
   },
 
   find(id) {
