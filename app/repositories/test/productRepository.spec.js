@@ -1,31 +1,4 @@
-const { productRepository } = require("../../repositories");
-
-beforeAll(async () => {
-  await queryInterface.bulkInsert(
-    "Products",
-    [
-      {
-        name: "Sepatu Futsal Putih",
-        picture: "https://i.pravatar.cc/300",
-        price: 1000,
-        location: "Bandung",
-        description: "Sepatu futsal putih, bahan berkualitas",
-        id_category_product: 1,
-        id_user: 1,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    ],
-    {}
-  );
-});
-
-afterAll(async () => {
-  await queryInterface.bulkDelete("Products", null, {
-    truncate: true,
-    restartIdentity: true,
-  });
-});
+const productRepository = require("../productRepository");
 
 describe("productRepository", () => {
   describe("create", () => {
