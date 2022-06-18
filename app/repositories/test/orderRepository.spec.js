@@ -1,31 +1,4 @@
-const { orderRepository } = require("../../repositories");
-const { sequelize } = require("../../models");
-
-const { queryInterface } = sequelize;
-
-beforeAll(async () => {
-  await queryInterface.bulkInsert(
-    "Orders",
-    [
-      {
-        price: 1000,
-        status: "pending",
-        id_product: 1,
-        id_user: 1,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    ],
-    {}
-  );
-});
-
-afterAll(async () => {
-  await queryInterface.bulkDelete("Orders", null, {
-    truncate: true,
-    restartIdentity: true,
-  });
-});
+const orderRepository = require("../orderRepository");
 
 describe("OrderRepository", () => {
   describe("create", () => {
@@ -42,6 +15,14 @@ describe("OrderRepository", () => {
       expect(order.status).toBe("pending");
       expect(order.id_product).toBe(1);
       expect(order.id_user).toBe(1);
+    });
+  });
+
+  describe("findByUser", () => {
+    it("should find all orders by user id", async () => {
+      const orders = await orderRepository.findByUser(1);
+
+      expect(orders.length >= 0).toBe(true);
     });
   });
 
