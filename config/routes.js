@@ -7,6 +7,7 @@ const apiRouter = express.Router();
  * TODO: Implement your own API
  *       implementations
  */
+apiRouter.post("/api/v1/auth/register", controllers.api.v1.userController.register);
 
 /**
  * TODO: Delete this, this is just a demonstration of
