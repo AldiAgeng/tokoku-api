@@ -8,6 +8,7 @@ const apiRouter = express.Router();
  *       implementations
  */
 apiRouter.post("/api/v1/auth/register", controllers.api.v1.userController.register);
+apiRouter.post("/api/v1/auth/login", controllers.api.v1.userController.login);
 
 /**
  * TODO: Delete this, this is just a demonstration of
