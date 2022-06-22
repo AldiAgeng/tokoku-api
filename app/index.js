@@ -4,6 +4,8 @@ const router = require("../config/routes");
 
 const app = express();
 
+require("dotenv").config();
+
 /** Install request logger */
 app.use(morgan("dev"));
 
