@@ -1,16 +1,21 @@
 const userRepository = require("../repositories/userRepository");
 const { encryptPassword, checkPassword, createToken } = require("../utils/authUtils");
+const { validationResult } = require("express-validator");
+
 module.exports = {
   async register(data) {
     try {
-      if (!data.name || !data.email || !data.password) {
+      const name = data.body.name;
+      const email = data.body.email;
+
+      if (!data.body.name && !data.body.email && !data.body.password) {
         throw {
           name: "badRequest",
           message: "Please fill all required field",
         };
       }
 
-      const user = await userRepository.findByEmail(data.email);
+      const user = await userRepository.findByEmail(data.body.email);
       if (user) {
         throw {
           name: "badRequest",
@@ -18,9 +23,15 @@ module.exports = {
         };
       }
 
-      const name = data.name;
-      const email = data.email;
-      const password = await encryptPassword(data.password);
+      const errors = validationResult(data);
+      if (!errors.isEmpty()) {
+        throw {
+          name: "badRequest",
+          message: errors.array()[0].msg,
+        };
+      }
+
+      const password = await encryptPassword(data.body.password);
       return userRepository.create({ name, email, password });
     } catch (error) {
       throw error;
@@ -29,11 +40,25 @@ module.exports = {
 
   async login(data) {
     try {
-      const email = data.email.toLowerCase();
-      const password = data.password;
+      const email = data.body.email;
+      const password = data.body.password;
 
-      const user = await userRepository.findByEmail(email);
+      if (!data.body.email && !data.body.password) {
+        throw {
+          name: "badRequest",
+          message: "Please fill all required field",
+        };
+      }
 
+      const errors = validationResult(data);
+      if (!errors.isEmpty()) {
+        throw {
+          name: "badRequest",
+          message: errors.array()[0].msg,
+        };
+      }
+
+      const user = await userRepository.findByEmail(email.toLowerCase());
       if (!user) {
         throw {
           name: "wrongEmailPassword",
