@@ -2,22 +2,16 @@ const userRepository = require("../userRepository");
 
 describe("userRepository", () => {
   describe("create", () => {
-    it("should create a new user", async () => {
-      const user = await userRepository.create({
+    it("should return data users", () => {
+      const mockBody = {
         name: "Aldi Ageng",
         email: "aldiageng48@gmail.com",
         password: "123456",
-        picture: "https://i.pravatar.cc/300",
-        phone_number: "081234567890",
-        address: "Jl. Raya Bohongan",
-      });
+      };
 
-      expect(user.name).toBe("Aldi Ageng");
-      expect(user.email).toBe("aldiageng48@gmail.com");
-      expect(user.password).toBe("123456");
-      expect(user.picture).toBe("https://i.pravatar.cc/300");
-      expect(user.phone_number).toBe("081234567890");
-      expect(user.address).toBe("Jl. Raya Bohongan");
+      const user = userRepository.create(mockBody);
+
+      expect(user).toBeDefined();
     });
   });
 
@@ -28,9 +22,6 @@ describe("userRepository", () => {
       expect(user.name).toBe("Aldi Ageng");
       expect(user.email).toBe("aldiageng48@gmail.com");
       expect(user.password).toBe("123456");
-      expect(user.picture).toBe("https://i.pravatar.cc/300");
-      expect(user.phone_number).toBe("081234567890");
-      expect(user.address).toBe("Jl. Raya Bohongan");
     });
   });
 
@@ -46,22 +37,6 @@ describe("userRepository", () => {
       });
 
       expect(user.length).toBe(1);
-    });
-  });
-
-  describe("findAll", () => {
-    it("should return all user", async () => {
-      const users = await userRepository.findAll();
-
-      expect(users.length >= 0).toBe(true);
-    });
-  });
-
-  describe("delete", () => {
-    it("should delete a user", async () => {
-      const user = await userRepository.delete(1);
-
-      expect(user).toBe(1);
     });
   });
 });

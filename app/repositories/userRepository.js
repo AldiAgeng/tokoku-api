@@ -1,21 +1,21 @@
 const { User } = require("../models");
 
 module.exports = {
-  async find(id) {
-    return await User.findByPk(id);
+  find(id) {
+    return User.findByPk(id);
   },
-  async findByEmail(email) {
-    return await User.findOne({
+  findByEmail(email) {
+    return User.findOne({
       where: {
         email,
       },
     });
   },
-  async create(user) {
-    return await User.create(user);
+  create(user) {
+    return User.create(user);
   },
-  async update(id, user) {
-    return await User.update(user, {
+  update(id, user) {
+    return User.update(user, {
       where: {
         id,
       },
