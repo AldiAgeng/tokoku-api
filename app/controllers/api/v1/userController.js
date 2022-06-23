@@ -1,9 +1,8 @@
 const userServices = require("../../../services/userServices");
-
 module.exports = {
   async register(req, res) {
     try {
-      const data = req.body;
+      const data = req;
       const user = await userServices.register(data);
       res.status(201).json({
         status: "success",
@@ -23,7 +22,7 @@ module.exports = {
 
   async login(req, res) {
     try {
-      const data = req.body;
+      const data = req;
       const user = await userServices.login(data);
       res.status(200).json({
         status: "success",
@@ -35,7 +34,7 @@ module.exports = {
         },
       });
     } catch (error) {
-      if (error.name === "wrongEmailPassword") {
+      if (error.name === "wrongEmailPassword" || error.name === "badRequest") {
         res.status(400).json({
           name: error.name,
           message: error.message,

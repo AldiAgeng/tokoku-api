@@ -1,5 +1,6 @@
 const express = require("express");
 const controllers = require("../app/controllers");
+const { userValidation } = require("../app/validations");
 
 const apiRouter = express.Router();
 
@@ -7,8 +8,8 @@ const apiRouter = express.Router();
  * TODO: Implement your own API
  *       implementations
  */
-apiRouter.post("/api/v1/auth/register", controllers.api.v1.userController.register);
-apiRouter.post("/api/v1/auth/login", controllers.api.v1.userController.login);
+apiRouter.post("/api/v1/auth/register", userValidation.registerDataValidate, controllers.api.v1.userController.register);
+apiRouter.post("/api/v1/auth/login", userValidation.loginDataValidate, controllers.api.v1.userController.login);
 
 /**
  * TODO: Delete this, this is just a demonstration of
