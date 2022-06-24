@@ -28,18 +28,11 @@ module.exports = {
       const email = data.body.email;
       const password = data.body.password;
 
-      if (!data.body.email && !data.body.password) {
-        throw {
-          name: "badRequest",
-          message: "Please fill all required field",
-        };
-      }
-
       const errors = validationResult(data);
       if (!errors.isEmpty()) {
         throw {
           name: "badRequest",
-          message: errors.array()[0].msg,
+          message: errors.array(),
         };
       }
 
