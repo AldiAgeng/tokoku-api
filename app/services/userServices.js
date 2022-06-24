@@ -91,4 +91,7 @@ module.exports = {
       throw error;
     }
   },
+  find(id) {
+    return userRepository.find(id);
+  },
 };
