@@ -8,26 +8,11 @@ module.exports = {
       const name = data.body.name;
       const email = data.body.email;
 
-      if (!data.body.name && !data.body.email && !data.body.password) {
-        throw {
-          name: "badRequest",
-          message: "Please fill all required field",
-        };
-      }
-
-      const user = await userRepository.findByEmail(data.body.email);
-      if (user) {
-        throw {
-          name: "badRequest",
-          message: "Email already exists",
-        };
-      }
-
       const errors = validationResult(data);
       if (!errors.isEmpty()) {
         throw {
           name: "badRequest",
-          message: errors.array()[0].msg,
+          message: errors.array(),
         };
       }
 
