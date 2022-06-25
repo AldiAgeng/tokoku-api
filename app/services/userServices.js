@@ -1,20 +1,11 @@
 const userRepository = require("../repositories/userRepository");
 const { encryptPassword, checkPassword, createToken } = require("../utils/authUtils");
-const { validationResult } = require("express-validator");
 
 module.exports = {
   async register(data) {
     try {
       const name = data.body.name;
       const email = data.body.email;
-
-      const errors = validationResult(data);
-      if (!errors.isEmpty()) {
-        throw {
-          name: "badRequest",
-          message: errors.array(),
-        };
-      }
 
       const password = await encryptPassword(data.body.password);
       return userRepository.create({ name, email, password });
@@ -27,14 +18,6 @@ module.exports = {
     try {
       const email = data.body.email;
       const password = data.body.password;
-
-      const errors = validationResult(data);
-      if (!errors.isEmpty()) {
-        throw {
-          name: "badRequest",
-          message: errors.array(),
-        };
-      }
 
       const user = await userRepository.findByEmail(email.toLowerCase());
       if (!user) {

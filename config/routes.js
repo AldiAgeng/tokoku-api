@@ -1,6 +1,7 @@
 const express = require("express");
 const controllers = require("../app/controllers");
-const { userValidation } = require("../app/validations");
+const { userValidation, productValidation } = require("../app/validations");
+const checkValidate = require("../app/middlewares/checkValidate");
 const middlewares = require("../app/middlewares/authorization");
 
 const apiRouter = express.Router();
@@ -9,8 +10,8 @@ const apiRouter = express.Router();
  * TODO: Implement your own API
  *       implementations
  */
-apiRouter.post("/api/v1/auth/register", userValidation.registerDataValidate, controllers.api.v1.userController.register);
-apiRouter.post("/api/v1/auth/login", userValidation.loginDataValidate, controllers.api.v1.userController.login);
+apiRouter.post("/api/v1/auth/register", userValidation.registerDataValidate, checkValidate.checkValidate, controllers.api.v1.userController.register);
+apiRouter.post("/api/v1/auth/login", userValidation.loginDataValidate, checkValidate.checkValidate, controllers.api.v1.userController.login);
 
 // seller product
 apiRouter.get("/api/v1/seller/product", middlewares.authorize, controllers.api.v1.productController.findProductByUser);

@@ -9,14 +9,7 @@ module.exports = {
         data: user,
       });
     } catch (error) {
-      if (error.name === "badRequest") {
-        res.status(400).json({
-          name: error.name,
-          message: error.message,
-        });
-      } else {
-        res.status(500).json(error.message);
-      }
+      res.status(500).json(error.message);
     }
   },
 
@@ -34,8 +27,8 @@ module.exports = {
         },
       });
     } catch (error) {
-      if (error.name === "wrongEmailPassword" || error.name === "badRequest") {
-        res.status(400).json({
+      if (error.name === "wrongEmailPassword") {
+        res.status(401).json({
           name: error.name,
           message: error.message,
         });
