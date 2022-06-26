@@ -10,13 +10,6 @@ module.exports = {
   },
   async create(data, user) {
     try {
-      if (!data.name || !data.picture || !data.price || !data.location || !data.description || !data.status || !data.id_category_product) {
-        throw {
-          name: "badRequest",
-          message: "Please fill all field",
-        };
-      }
-
       const count = await productRepository.countByStatusAndUser(user);
       if (count >= 4) {
         throw {
@@ -30,16 +23,16 @@ module.exports = {
       throw error;
     }
   },
-  async find(id) {
+  async find(data) {
     try {
-      if (!id) {
+      if (!data.params.id) {
         throw {
           name: "badRequest",
-          message: "Please fill in id",
+          message: "Id is required",
         };
       }
 
-      const product = await productRepository.find(id);
+      const product = await productRepository.find(data.params.id);
       if (!product) {
         throw {
           name: "productNotFound",
@@ -53,13 +46,6 @@ module.exports = {
   },
   async update(id, data) {
     try {
-      if (!id) {
-        throw {
-          name: "badRequest",
-          message: "Please fill in id",
-        };
-      }
-
       const product = await productRepository.find(id);
       if (!product) {
         throw {
@@ -76,13 +62,6 @@ module.exports = {
 
   async delete(id) {
     try {
-      if (!id) {
-        throw {
-          name: "badRequest",
-          message: "Please fill in id",
-        };
-      }
-
       const product = await productRepository.find(id);
       if (!product) {
         throw {
