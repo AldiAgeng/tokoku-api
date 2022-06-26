@@ -5,20 +5,15 @@ module.exports = {
     try {
       const user = req.user.id;
       const products = await productServices.findProductByUser(user);
-
       res.status(200).json({
         status: "success",
         data: products,
       });
     } catch (error) {
-      if (error.name === "badRequest") {
-        res.status(400).json({
-          name: error.name,
-          message: error.message,
-        });
-      } else {
-        res.status(500).json(error.message);
-      }
+      res.status(500).json({
+        name: error.name,
+        message: error.message,
+      });
     }
   },
   async create(req, res) {
@@ -26,27 +21,36 @@ module.exports = {
       const user = req.user.id;
       const data = req.body;
       const product = await productServices.create(data, user);
-      res.status(200).json(product);
+      res.status(200).json({
+        status: "success",
+        data: product,
+      });
     } catch (error) {
-      res.status(500).json(error);
+      res.status(500).json({
+        name: error.name,
+        message: error.message,
+      });
     }
   },
   async find(req, res) {
     try {
-      const id = req.params.id;
+      const id = req;
       const product = await productServices.find(id);
       res.status(200).json({
         status: "success",
         data: product,
       });
     } catch (error) {
-      if (error.name === "productNotFound") {
+      if (error.name === "productNotFound" || error.name === "badRequest") {
         res.status(404).json({
           name: error.name,
           message: error.message,
         });
       } else {
-        res.status(500).json(error);
+        res.status(500).json({
+          name: error.name,
+          message: error.message,
+        });
       }
     }
   },
@@ -65,16 +69,12 @@ module.exports = {
           name: error.name,
           message: error.message,
         });
-      }
-
-      if (error.name === "badRequest") {
-        res.status(400).json({
+      } else {
+        res.status(500).json({
           name: error.name,
           message: error.message,
         });
       }
-
-      res.status(500).json(error);
     }
   },
   async delete(req, res) {
@@ -91,16 +91,12 @@ module.exports = {
           name: error.name,
           message: error.message,
         });
+      } else {
+        res.status(500).json({
+          name: error.name,
+          message: error.message,
+        });
       }
     }
-
-    if (error.name === "badRequest") {
-      res.status(400).json({
-        name: error.name,
-        message: error.message,
-      });
-    }
-
-    res.status(500).json(error);
   },
 };

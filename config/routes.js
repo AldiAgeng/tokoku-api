@@ -10,12 +10,12 @@ const apiRouter = express.Router();
  * TODO: Implement your own API
  *       implementations
  */
-apiRouter.post("/api/v1/auth/register", userValidation.registerDataValidate, checkValidate.checkValidate, controllers.api.v1.userController.register);
-apiRouter.post("/api/v1/auth/login", userValidation.loginDataValidate, checkValidate.checkValidate, controllers.api.v1.userController.login);
+apiRouter.post("/api/v1/auth/register", userValidation.registerDataValidate, checkValidate, controllers.api.v1.userController.register);
+apiRouter.post("/api/v1/auth/login", userValidation.loginDataValidate, checkValidate, controllers.api.v1.userController.login);
 
 // seller product
 apiRouter.get("/api/v1/seller/product", middlewares.authorize, controllers.api.v1.productController.findProductByUser);
-apiRouter.post("/api/v1/seller/product", middlewares.authorize, controllers.api.v1.productController.create);
+apiRouter.post("/api/v1/seller/product", middlewares.authorize, productValidation.productDataValidate, checkValidate, controllers.api.v1.productController.create);
 apiRouter.get("/api/v1/seller/product/:id", middlewares.authorize, controllers.api.v1.productController.find);
 apiRouter.put("/api/v1/seller/product/:id", middlewares.authorize, controllers.api.v1.productController.update);
 apiRouter.delete("/api/v1/seller/product/:id", middlewares.authorize, controllers.api.v1.productController.delete);
