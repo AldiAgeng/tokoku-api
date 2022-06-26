@@ -24,18 +24,79 @@ module.exports = (sequelize, DataTypes) => {
   }
   Product.init(
     {
-      name: DataTypes.STRING,
-      picture: DataTypes.TEXT,
+      name: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            msg: "Name is required",
+          },
+        },
+      },
+      picture: {
+        type: DataTypes.TEXT,
+        validate: {
+          notEmpty: {
+            msg: "Picture is required",
+          },
+        },
+      },
       price: {
         type: DataTypes.INTEGER,
-        isNumeric: true,
+        validate: {
+          notEmpty: {
+            msg: "Price is required",
+          },
+          isNumeric: {
+            msg: "Price is not valid",
+          },
+        },
       },
-      location: DataTypes.TEXT,
-      description: DataTypes.TEXT,
-      status: DataTypes.STRING,
-      id_category_product: DataTypes.INTEGER,
-      id_user: DataTypes.INTEGER,
+      location: {
+        type: DataTypes.TEXT,
+        validate: {
+          notEmpty: {
+            msg: "Location is required",
+          },
+        },
+      },
+      description: {
+        type: DataTypes.TEXT,
+        validate: {
+          notEmpty: {
+            msg: "Description is required",
+          },
+        },
+      },
+      status: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            msg: "Status is required",
+          },
+          isIn: {
+            args: [["available", "sold"]],
+            msg: "Status is not valid",
+          },
+        },
+      },
+      id_category_product: {
+        type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            msg: "Category is required",
+          },
+        },
+      },
+      id_user: {
+        type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            msg: "User is required",
+          },
+        },
+      },
     },
+
     {
       sequelize,
       modelName: "Product",

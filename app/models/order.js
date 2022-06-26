@@ -22,11 +22,43 @@ module.exports = (sequelize, DataTypes) => {
     {
       price: {
         type: DataTypes.INTEGER,
-        isNumeric: true,
+        validate: {
+          isNumeric: {
+            msg: "Price is not valid",
+          },
+          notEmpty: {
+            msg: "Price is required",
+          },
+        },
       },
-      status: DataTypes.STRING,
-      id_product: DataTypes.INTEGER,
-      id_user: DataTypes.INTEGER,
+      status: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            msg: "Status is required",
+          },
+          isIn: {
+            args: [["bid", "accepted", "rejected"]],
+            msg: "Status is not valid",
+          },
+        },
+      },
+      id_product: {
+        type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            msg: "Product is required",
+          },
+        },
+      },
+      id_user: {
+        type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            msg: "User is required",
+          },
+        },
+      },
     },
     {
       sequelize,
