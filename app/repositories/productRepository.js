@@ -67,7 +67,7 @@ module.exports = {
   countByStatusAndUser(user) {
     return Product.count({
       where: {
-        status: "avaliable",
+        status: "available",
         id_user: user,
       },
     });

@@ -25,13 +25,6 @@ module.exports = {
   },
   async find(data) {
     try {
-      if (!data.params.id) {
-        throw {
-          name: "badRequest",
-          message: "Id is required",
-        };
-      }
-
       const product = await productRepository.find(data.params.id);
       if (!product) {
         throw {
