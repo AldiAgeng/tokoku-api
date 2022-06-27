@@ -26,6 +26,12 @@ module.exports = {
         data: product,
       });
     } catch (error) {
+      if (error.name === "badRequest") {
+        res.status(400).json({
+          name: error.name,
+          message: error.message,
+        });
+      }
       res.status(500).json({
         name: error.name,
         message: error.message,
@@ -41,7 +47,7 @@ module.exports = {
         data: product,
       });
     } catch (error) {
-      if (error.name === "productNotFound" || error.name === "badRequest") {
+      if (error.name === "productNotFound") {
         res.status(404).json({
           name: error.name,
           message: error.message,
