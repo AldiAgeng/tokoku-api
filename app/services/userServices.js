@@ -55,4 +55,7 @@ module.exports = {
   find(id) {
     return userRepository.find(id);
   },
+  async showDataUser() {
+    console.log("dataUser");
+  }
 };
