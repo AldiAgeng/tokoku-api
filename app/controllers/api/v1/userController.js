@@ -9,7 +9,10 @@ module.exports = {
         data: user,
       });
     } catch (error) {
-      res.status(500).json(error.message);
+      res.status(500).json({
+        name: error.name,
+        message: error.message,
+      });
     }
   },
 
@@ -33,7 +36,10 @@ module.exports = {
           message: error.message,
         });
       } else {
-        res.status(500).json(error.message);
+        res.status(500).json({
+          name: error.name,
+          message: error.message,
+        });
       }
     }
   },
