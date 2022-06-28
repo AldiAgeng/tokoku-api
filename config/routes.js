@@ -21,6 +21,9 @@ apiRouter.get("/api/v1/seller/product/:id", middlewares.authorize, controllers.a
 apiRouter.put("/api/v1/seller/product/:id", middlewares.authorize, controllers.api.v1.productController.update);
 apiRouter.delete("/api/v1/seller/product/:id", middlewares.authorize, controllers.api.v1.productController.delete);
 
+// seller order
+apiRouter.get("/api/v1/seller/order", middlewares.authorize, controllers.api.v1.orderController.findBidProduct);
+
 /**
  * TODO: Delete this, this is just a demonstration of
  *       error handler
