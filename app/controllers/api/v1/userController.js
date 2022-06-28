@@ -1,3 +1,4 @@
+const user = require("../../../models/user");
 const userServices = require("../../../services/userServices");
 module.exports = {
   async register(req, res) {
@@ -43,4 +44,11 @@ module.exports = {
       }
     }
   },
+
+  async getCurrentUser(req, res) {
+    res.status(200).json({
+      status: "success",
+      data: req.user,
+    })
+  }
 };
