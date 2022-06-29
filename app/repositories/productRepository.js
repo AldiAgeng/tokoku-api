@@ -74,6 +74,27 @@ module.exports = {
   },
   // End Seller
 
+  // Buyer
+  // buyer/product/ get all product available
+  findAllAvailable() {
+    return Product.findAll({
+      include: [
+        {
+          model: CategoryProduct,
+          attributes: ["id", "name"],
+        },
+        {
+          model: User,
+          attributes: ["id", "name", "email", "picture", "phone_number", "address"],
+        },
+      ],
+      where: {
+        status: "available",
+      },
+      attributes: ["id", "name", "picture", "price", "location", "description", "status"],
+    });
+  },
+
   // findByCategory(category) {
   //   return Product.findAll({
   //     include: [

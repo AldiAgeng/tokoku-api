@@ -68,4 +68,13 @@ module.exports = {
       throw error;
     }
   },
+
+  // buyer
+  findAllAvailable() {
+    try {
+      return productRepository.findAllAvailable();
+    } catch (error) {
+      throw error;
+    }
+  },
 };

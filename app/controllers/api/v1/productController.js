@@ -105,4 +105,20 @@ module.exports = {
       }
     }
   },
+
+  // buyer
+  async findAllAvailable(req, res) {
+    try {
+      const products = await productServices.findAllAvailable();
+      res.status(200).json({
+        status: "success",
+        data: products,
+      });
+    } catch (error) {
+      res.status(500).json({
+        name: error.name,
+        message: error.message,
+      });
+    }
+  },
 };

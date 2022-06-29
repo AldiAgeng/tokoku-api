@@ -31,6 +31,9 @@ apiRouter.put("/api/v1/seller/order/:id", middlewares.authorize, controllers.api
 apiRouter.get("/api/v1/seller/category/:id", middlewares.authorize, controllers.api.v1.categoryController.find);
 apiRouter.get("/api/v1/seller/category", middlewares.authorize, controllers.api.v1.categoryController.getAllCategory);
 
+// buyer product
+apiRouter.get("/api/v1/buyer/product", middlewares.authorize, controllers.api.v1.productController.findAllAvailable);
+apiRouter.get("/api/v1/buyer/product/:id", middlewares.authorize, controllers.api.v1.productController.find);
 /**
  * TODO: Delete this, this is just a demonstration of
  *       error handler
