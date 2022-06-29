@@ -25,6 +25,34 @@ module.exports = {
         order,
       });
     } catch (error) {
+      if (error.name === "orderNotFound") {
+        res.status(404).json({
+          name: error.name,
+          message: error.message,
+        });
+      }
+      res.status(500).json({
+        name: error.name,
+        message: error.message,
+      });
+    }
+  },
+  async updateStatus(req, res) {
+    try {
+      const id = req.params.id;
+      const data = req.body;
+      const order = await orderServices.updateStatus(id, data);
+      res.json({
+        status: "success",
+        order,
+      });
+    } catch (error) {
+      if (error.name === "orderNotFound") {
+        res.status(404).json({
+          name: error.name,
+          message: error.message,
+        });
+      }
       res.status(500).json({
         name: error.name,
         message: error.message,
