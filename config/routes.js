@@ -13,6 +13,7 @@ const apiRouter = express.Router();
 apiRouter.post("/api/v1/auth/register", userValidation.registerDataValidate, checkValidate, controllers.api.v1.userController.register);
 apiRouter.post("/api/v1/auth/login", userValidation.loginDataValidate, checkValidate, controllers.api.v1.userController.login);
 apiRouter.get("/api/v1/auth/user", middlewares.authorize, controllers.api.v1.userController.getCurrentUser);
+apiRouter.put("/api/v1/auth/user/:id", middlewares.authorize, controllers.api.v1.userController.update);
 
 // seller product
 apiRouter.get("/api/v1/seller/product", middlewares.authorize, controllers.api.v1.productController.findProductByUser);

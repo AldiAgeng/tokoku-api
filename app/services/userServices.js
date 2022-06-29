@@ -55,7 +55,18 @@ module.exports = {
   find(id) {
     return userRepository.find(id);
   },
-  async showDataUser() {
-    console.log("dataUser");
+  async update(id, user){
+    try {
+      const userData = await userRepository.find(id);
+      if (!userData) {
+        throw {
+          name: "userNotFound",
+          message: "User is not found",
+        }
+      }
+      return userRepository.update(id, user);
+    } catch (error) {
+      throw error;
+    }
   }
 };
