@@ -35,9 +35,14 @@ module.exports = {
       ],
     });
   },
-  update(id, data) {
-    return Order.update(data, {
-      where: { id },
-    });
+  updateStatus(id, data) {
+    return Order.update(
+      {
+        status: data,
+      },
+      {
+        where: { id },
+      }
+    );
   },
 };

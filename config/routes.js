@@ -25,6 +25,7 @@ apiRouter.delete("/api/v1/seller/product/:id", middlewares.authorize, controller
 // seller order
 apiRouter.get("/api/v1/seller/order", middlewares.authorize, controllers.api.v1.orderController.findBidProduct);
 apiRouter.get("/api/v1/seller/order/:id", middlewares.authorize, controllers.api.v1.orderController.findById);
+apiRouter.put("/api/v1/seller/order/:id", middlewares.authorize, controllers.api.v1.orderController.updateStatus);
 
 // seller category
 apiRouter.get("/api/v1/seller/category/:id", middlewares.authorize, controllers.api.v1.categoryController.find);

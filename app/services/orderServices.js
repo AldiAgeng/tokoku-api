@@ -22,7 +22,7 @@ module.exports = {
       throw error;
     }
   },
-  async update(id, data) {
+  async updateStatus(id, data) {
     try {
       const order = await orderRepository.findById(id);
       if (!order) {
@@ -31,7 +31,7 @@ module.exports = {
           message: "Order is not found",
         };
       }
-      return orderRepository.update(id, data);
+      return orderRepository.updateStatus(id, data.status);
     } catch (error) {
       throw error;
     }
