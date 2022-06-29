@@ -22,7 +22,18 @@ module.exports = {
     });
   },
   findById(id) {
-    return Order.findByPk(id);
+    return Order.findByPk(id, {
+      include: [
+        {
+          model: Product,
+          attributes: ["id", "name", "picture", "price", "status", "description"],
+        },
+        {
+          model: User,
+          attributes: ["id", "name", "picture", "phone_number"],
+        },
+      ],
+    });
   },
   update(id, data) {
     return Order.update(data, {

@@ -16,4 +16,19 @@ module.exports = {
       });
     }
   },
+  async findById(req, res) {
+    try {
+      const id = req.params.id;
+      const order = await orderServices.findById(id);
+      res.json({
+        status: "success",
+        order,
+      });
+    } catch (error) {
+      res.status(500).json({
+        name: error.name,
+        message: error.message,
+      });
+    }
+  },
 };
