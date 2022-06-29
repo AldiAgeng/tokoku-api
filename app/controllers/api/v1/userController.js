@@ -50,5 +50,29 @@ module.exports = {
       status: "success",
       data: req.user,
     })
+  },
+
+  async update(req, res) {
+    try {
+      const id = req.params.id;
+      const user = req.body;
+      const userData = await userServices.update(id, user);
+      res.status(200).json({
+        status: "success",
+        data: userData,
+      });
+    } catch (error) {
+      if (error.name === "usertNotFound") {
+        res.status(404).json({
+          name: error.name,
+          message: error.message,
+        });
+      } else {
+        res.status(500).json({
+          name: error.name,
+          message: error.message,
+        });
+      } 
+    }
   }
 };
