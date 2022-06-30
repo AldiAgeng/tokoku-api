@@ -1,6 +1,6 @@
 const express = require("express");
 const controllers = require("../app/controllers");
-const { userValidation, productValidation } = require("../app/validations");
+const { userValidation, productValidation, orderValidation } = require("../app/validations");
 const checkValidate = require("../app/middlewares/checkValidate");
 const middlewares = require("../app/middlewares/authorization");
 
@@ -34,6 +34,12 @@ apiRouter.get("/api/v1/seller/category", middlewares.authorize, controllers.api.
 // buyer product
 apiRouter.get("/api/v1/buyer/product", middlewares.authorize, controllers.api.v1.productController.findAllAvailable);
 apiRouter.get("/api/v1/buyer/product/:id", middlewares.authorize, controllers.api.v1.productController.find);
+
+// buyer order
+apiRouter.post("/api/v1/buyer/order", middlewares.authorize, orderValidation.orderDataValidate, checkValidate, controllers.api.v1.orderController.createOrder);
+apiRouter.get("/api/v1/buyer/order", middlewares.authorize, controllers.api.v1.orderController.findOrderByUser);
+apiRouter.get("/api/v1/buyer/order/:id", middlewares.authorize, controllers.api.v1.orderController.findById);
+apiRouter.put("/api/v1/buyer/order/:id", middlewares.authorize, controllers.api.v1.orderController.updateOrder);
 /**
  * TODO: Delete this, this is just a demonstration of
  *       error handler

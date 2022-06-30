@@ -45,4 +45,40 @@ module.exports = {
       }
     );
   },
+
+  // buyer
+  createOrder(data, user) {
+    return Order.create({
+      ...data,
+      id_user: user,
+    });
+  },
+  findOrderByUser(user) {
+    return Order.findAll({
+      include: [
+        {
+          model: Product,
+          attributes: ["id", "name", "picture", "price", "status"],
+        },
+        {
+          model: User,
+          attributes: ["id", "name", "picture", "phone_number", "address"],
+        },
+      ],
+      where: {
+        id_user: user,
+      },
+    });
+  },
+  updateOrder(id, data) {
+    return Order.update(
+      {
+        price: data,
+        status: "bid",
+      },
+      {
+        where: { id },
+      }
+    );
+  },
 };
