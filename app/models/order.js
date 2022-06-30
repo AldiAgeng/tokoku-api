@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
             msg: "Status is required",
           },
           isIn: {
-            args: [["bid", "accepted", "rejected"]],
+            args: [["bid", "canceled", "accepted", "rejected"]],
             msg: "Status is not valid",
           },
         },

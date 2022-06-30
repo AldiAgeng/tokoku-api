@@ -36,4 +36,35 @@ module.exports = {
       throw error;
     }
   },
+
+  // buyer
+  createOrder(data, user) {
+    try {
+      return orderRepository.createOrder(data, user.id);
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  findOrderByUser(user) {
+    try {
+      return orderRepository.findOrderByUser(user.id);
+    } catch (error) {
+      throw error;
+    }
+  },
+  async updateOrder(id, data) {
+    try {
+      const order = await orderRepository.findById(id);
+      if (!order) {
+        throw {
+          name: "orderNotFound",
+          message: "Order is not found",
+        };
+      }
+      return await orderRepository.updateOrder(id, data);
+    } catch (error) {
+      throw error;
+    }
+  },
 };
