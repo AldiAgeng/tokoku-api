@@ -77,4 +77,11 @@ module.exports = {
       throw error;
     }
   },
+  filterByCategory(category) {
+    try {
+      return productRepository.filterByCategory(category);
+    } catch (error) {
+      throw error;
+    }
+  },
 };
