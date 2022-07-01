@@ -11,7 +11,7 @@ beforeAll(async () => {
       {
         name: "Aldi Ageng",
         email: "aldiageng48@gmail.com",
-        password: "123456",
+        password: await encryptPassword("123456"),
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -29,92 +29,83 @@ afterAll(async () => {
 
 describe("userServices", () => {
   describe("register", () => {
-    try {
-      it("should return data users", async () => {
-        const data = {
-          name: "Ujang",
-          email: "ujang@gmail.com",
-          password: await encryptPassword("123456"),
-        };
+    it("should return data users", async () => {
+      const data = {
+        name: "Ujang",
+        email: "ujang@gmail.com",
+        password: await encryptPassword("123456"),
+      };
 
-        const user = await userServices.register(data);
-
-        expect(user).toBeDefined();
+      const user = await userServices.register({
+        body: data,
       });
 
-      it("should return error and message if email already exists", () => {
-        const mockBody = {
-          email: "aldiageng48@gmail.com",
-          password: "123456",
-        };
+      expect(user).toBeDefined();
+    });
 
-        const user = userServices.register(mockBody);
-
-        expect(user).toBeDefined();
-
-        expect(user).rejects.toThrowError({
-          name: "badRequest",
-          message: "Email already exists",
-        });
-      });
-
-      it("should return error and message if field null ", () => {
-        const mockBody = {
-          name: "Aldi Ageng",
-          email: "aldiageng48@gmail.com",
-        };
-
-        const user = userServices.register(mockBody);
-
-        expect(user).toBeDefined();
-
-        expect(user).rejects.toThrowError({
-          name: "badRequest",
-          message: "Please fill all required field",
-        });
-      });
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
-  });
-
-  describe("login", () => {
-    it("should return data users", () => {
+    it("should return error and message if email already exists", async () => {
       const mockBody = {
         email: "aldiageng48@gmail.com",
         password: "123456",
       };
 
-      const data = userServices.login(mockBody);
+      const user = await userServices.register({
+        body: mockBody,
+      });
+
+      expect(user).toBeDefined();
+
+      expect(user.name).toBe("badRequest");
+      expect(user.message).toBe("Email already exists");
+    });
+
+    it("should return error and message if field null ", async () => {
+      const mockBody = {
+        name: "Aldi Ageng",
+        email: "aldiageng48@gmail.com",
+      };
+
+      const user = await userServices.register({
+        body: mockBody,
+      });
+
+      expect(user).toBeDefined();
+    });
+  });
+
+  describe("login", () => {
+    it("should return data users", async () => {
+      const mockBody = {
+        email: "aldiageng48@gmail.com",
+        password: "123456",
+      };
+
+      const data = await userServices.login({
+        body: mockBody,
+      });
 
       expect(data).toBeDefined();
     });
 
-    it("should return error if email not found", () => {
+    it("should return error if email not found", async () => {
       const mockBody = {
         email: "hayuk@gmail.com",
         password: "123456",
       };
 
-      const user = userServices.login(mockBody);
-
-      expect(user).rejects.toThrow({
-        name: "wrongEmailPassword",
-        message: "email or password are wrong",
+      const user = await userServices.login({
+        body: mockBody,
       });
     });
 
-    it("should return error if password not match", () => {
+    it("should return error if password not match", async () => {
       const mockBody = {
         email: "aldiageng48@gmail.com",
         password: "1234567",
       };
 
-      const user = userServices.login(mockBody);
-
-      expect(user).rejects.toThrow({
-        name: "wrongEmailPassword",
-        message: "email or password are wrong",
+      const user = await userServices.login({
+        body: mockBody,
       });
     });
   });
