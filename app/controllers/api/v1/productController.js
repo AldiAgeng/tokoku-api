@@ -109,11 +109,20 @@ module.exports = {
   // buyer
   async findAllAvailable(req, res) {
     try {
-      const products = await productServices.findAllAvailable();
-      res.status(200).json({
-        status: "success",
-        data: products,
-      });
+      if (req.query.category) {
+        const upperCaseFirstLetter = req.query.category.charAt(0).toUpperCase() + req.query.category.slice(1).toLowerCase();
+        const products = await productServices.filterByCategory(upperCaseFirstLetter);
+        res.status(200).json({
+          status: "success",
+          data: products,
+        });
+      } else {
+        const products = await productServices.findAllAvailable();
+        res.status(200).json({
+          status: "success",
+          data: products,
+        });
+      }
     } catch (error) {
       res.status(500).json({
         name: error.name,

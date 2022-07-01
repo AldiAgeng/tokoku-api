@@ -95,6 +95,28 @@ module.exports = {
     });
   },
 
+  filterByCategory(category) {
+    return Product.findAll({
+      include: [
+        {
+          model: CategoryProduct,
+          attributes: ["id", "name"],
+          where: {
+            name: category,
+          },
+        },
+        {
+          model: User,
+          attributes: ["id", "name", "email", "picture", "phone_number", "address"],
+        },
+      ],
+      where: {
+        status: "available",
+      },
+      attributes: ["id", "name", "picture", "price", "location", "description", "status"],
+    });
+  },
+
   // findByCategory(category) {
   //   return Product.findAll({
   //     include: [
