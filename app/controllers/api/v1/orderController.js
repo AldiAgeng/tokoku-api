@@ -116,4 +116,45 @@ module.exports = {
       });
     }
   },
+
+  // history
+  async historyUser(req, res) {
+    try {
+      const user = req.user;
+      const seller = await orderServices.historySeller(user);
+      const buyer = await orderServices.historyBuyer(user);
+      res.json({
+        status: "success",
+        Seller: seller,
+        Buyer: buyer,
+      });
+    } catch (error) {
+      res.status(500).json({
+        name: error.name,
+        message: error.message,
+      });
+    }
+  },
+
+  async findOneHistory(req, res) {
+    try {
+      const id = req.params.id;
+      const order = await orderServices.findById(id);
+      res.json({
+        status: "success",
+        order,
+      });
+    } catch (error) {
+      if (error.name === "orderNotFound") {
+        res.status(404).json({
+          name: error.name,
+          message: error.message,
+        });
+      }
+      res.status(500).json({
+        name: error.name,
+        message: error.message,
+      });
+    }
+  },
 };

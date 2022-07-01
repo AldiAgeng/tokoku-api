@@ -81,4 +81,41 @@ module.exports = {
       }
     );
   },
+
+  historySeller(user) {
+    return Order.findAll({
+      include: [
+        {
+          model: Product,
+          attributes: ["id", "name", "picture", "price", "status"],
+          where: {
+            id_user: user,
+            status: "sold",
+          },
+        },
+        {
+          model: User,
+          attributes: ["id", "name", "picture", "phone_number", "address"],
+        },
+      ],
+    });
+  },
+  historyBuyer(user) {
+    return Order.findAll({
+      include: [
+        {
+          model: Product,
+          attributes: ["id", "name", "picture", "price", "status"],
+        },
+        {
+          model: User,
+          attributes: ["id", "name", "picture", "phone_number", "address"],
+        },
+      ],
+      where: {
+        id_user: user,
+        status: "accepted",
+      },
+    });
+  },
 };

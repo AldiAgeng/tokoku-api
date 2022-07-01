@@ -40,6 +40,10 @@ apiRouter.post("/api/v1/buyer/order", middlewares.authorize, orderValidation.ord
 apiRouter.get("/api/v1/buyer/order", middlewares.authorize, controllers.api.v1.orderController.findOrderByUser);
 apiRouter.get("/api/v1/buyer/order/:id", middlewares.authorize, controllers.api.v1.orderController.findById);
 apiRouter.put("/api/v1/buyer/order/:id", middlewares.authorize, controllers.api.v1.orderController.updateOrder);
+
+// history
+apiRouter.get("/api/v1/history", middlewares.authorize, controllers.api.v1.orderController.historyUser);
+
 /**
  * TODO: Delete this, this is just a demonstration of
  *       error handler

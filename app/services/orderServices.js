@@ -67,4 +67,20 @@ module.exports = {
       throw error;
     }
   },
+
+  // history
+  historySeller(user) {
+    try {
+      return orderRepository.historySeller(user.id);
+    } catch (error) {
+      throw error;
+    }
+  },
+  historyBuyer(user) {
+    try {
+      return orderRepository.historyBuyer(user.id);
+    } catch (error) {
+      throw error;
+    }
+  },
 };
