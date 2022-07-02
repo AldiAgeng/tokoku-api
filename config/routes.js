@@ -43,6 +43,7 @@ apiRouter.put("/api/v1/buyer/order/:id", middlewares.authorize, controllers.api.
 
 // history
 apiRouter.get("/api/v1/history", middlewares.authorize, controllers.api.v1.orderController.historyUser);
+apiRouter.get("/api/v1/history/:id", middlewares.authorize, controllers.api.v1.orderController.findById);
 
 /**
  * TODO: Delete this, this is just a demonstration of
