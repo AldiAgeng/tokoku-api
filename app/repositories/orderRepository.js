@@ -1,4 +1,4 @@
-const { Order, Product, User } = require("../models");
+const { Order, Product, User, Notification } = require("../models");
 
 module.exports = {
   findBidProduct(user) {

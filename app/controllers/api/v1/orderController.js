@@ -1,4 +1,5 @@
 const orderServices = require("../../../services/orderServices");
+const notificationServices = require("../../../services/notificationServices");
 
 module.exports = {
   async findBidProduct(req, res) {
@@ -42,6 +43,7 @@ module.exports = {
       const id = req.params.id;
       const data = req.body;
       const order = await orderServices.updateStatus(id, data);
+      await notificationServices.createNotification(id);
       res.json({
         status: "success",
         order,
@@ -66,6 +68,7 @@ module.exports = {
       const data = req.body;
       const user = req.user;
       const order = await orderServices.createOrder(data, user);
+      await notificationServices.createNotification(order.id);
       res.json({
         status: "success",
         order,
@@ -99,6 +102,7 @@ module.exports = {
       const id = req.params.id;
       const data = req.body.price;
       const order = await orderServices.updateOrder(id, data);
+      await notificationServices.createNotification(id);
       res.json({
         status: "success",
         order,

@@ -45,6 +45,10 @@ apiRouter.put("/api/v1/buyer/order/:id", middlewares.authorize, controllers.api.
 apiRouter.get("/api/v1/history", middlewares.authorize, controllers.api.v1.orderController.historyUser);
 apiRouter.get("/api/v1/history/:id", middlewares.authorize, controllers.api.v1.orderController.findById);
 
+// notification
+apiRouter.get("/api/v1/notification", middlewares.authorize, controllers.api.v1.notificationController.findNotificationByUser);
+apiRouter.get("/api/v1/notification/:id", middlewares.authorize, controllers.api.v1.notificationController.findOneNotification);
+
 /**
  * TODO: Delete this, this is just a demonstration of
  *       error handler

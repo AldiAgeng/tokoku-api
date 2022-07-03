@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
       Order.belongsTo(models.Product, {
         foreignKey: "id_product",
       });
+
+      Order.hasMany(models.Notification, {
+        foreignKey: "id_order",
+      });
     }
   }
   Order.init(
