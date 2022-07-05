@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const router = require("../config/routes");
 
 const app = express();
+app.use(express.static("public"));
 
 require("dotenv").config();
 

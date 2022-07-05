@@ -14,11 +14,19 @@ module.exports = {
   create(user) {
     return User.create(user);
   },
-  update(id, user) {
-    return User.update(user, {
-      where: {
-        id,
+  update(id, user, url) {
+    return User.update(
+      {
+        name: user.name,
+        phone_number: user.phone_number,
+        address: user.address,
+        picture: url,
       },
-    });
+      {
+        where: {
+          id,
+        },
+      }
+    );
   },
 };

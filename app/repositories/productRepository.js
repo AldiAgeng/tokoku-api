@@ -41,19 +41,36 @@ module.exports = {
     });
   },
   // seller/product / create product
-  create(data, id_user) {
+  create(data, id_user, url) {
     return Product.create({
-      ...data,
+      name: data.name,
+      picture: url,
+      price: data.price,
+      location: data.location,
+      description: data.description,
+      status: data.status,
+      id_category_product: data.id_category_product,
       id_user,
     });
   },
   // seller/product/:id / update product
-  update(id, data) {
-    return Product.update(data, {
-      where: {
-        id,
+  update(id, data, url) {
+    return Product.update(
+      {
+        name: data.name,
+        picture: url,
+        price: data.price,
+        location: data.location,
+        description: data.description,
+        status: data.status,
+        id_category_product: data.id_category_product,
       },
-    });
+      {
+        where: {
+          id,
+        },
+      }
+    );
   },
   // seller/product/:id / delete product
   delete(id) {
@@ -116,15 +133,4 @@ module.exports = {
       attributes: ["id", "name", "picture", "price", "location", "description", "status"],
     });
   },
-
-  // findByCategory(category) {
-  //   return Product.findAll({
-  //     include: [
-  //       {
-  //         model: CategoryProduct,
-  //         where: { name: category },
-  //       },
-  //     ],
-  //   });
-  // },
 };

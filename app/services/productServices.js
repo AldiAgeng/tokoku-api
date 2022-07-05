@@ -8,7 +8,7 @@ module.exports = {
       throw error;
     }
   },
-  async create(data, user) {
+  async create(data, user, url) {
     try {
       const count = await productRepository.countByStatusAndUser(user);
       if (count >= 4) {
@@ -18,7 +18,7 @@ module.exports = {
         };
       }
 
-      return productRepository.create(data, user);
+      return productRepository.create(data, user, url);
     } catch (error) {
       throw error;
     }
@@ -37,7 +37,7 @@ module.exports = {
       throw error;
     }
   },
-  async update(id, data) {
+  async update(id, data, url) {
     try {
       const product = await productRepository.find(id);
       if (!product) {
@@ -47,7 +47,7 @@ module.exports = {
         };
       }
 
-      return productRepository.update(id, data);
+      return productRepository.update(id, data, url);
     } catch (error) {
       throw error;
     }

@@ -20,7 +20,8 @@ module.exports = {
     try {
       const user = req.user.id;
       const data = req.body;
-      const product = await productServices.create(data, user);
+      const url = req.file.filename;
+      const product = await productServices.create(data, user, url);
       res.status(200).json({
         status: "success",
         data: product,
@@ -62,13 +63,20 @@ module.exports = {
   },
   async update(req, res) {
     try {
-      const id = req.params.id;
-      const data = req.body;
-      const product = await productServices.update(id, data);
-      res.status(200).json({
-        status: "success",
-        data: product,
-      });
+      if (req.file) {
+        const url = req.file.filename;
+        await productServices.update(req.params.id, req.body, url);
+        res.status(200).json({
+          status: "success",
+          message: "product updated successfully",
+        });
+      } else {
+        await productServices.update(req.params.id, req.body);
+        res.status(200).json({
+          status: "success",
+          message: "product updated successfully",
+        });
+      }
     } catch (error) {
       if (error.name === "productNotFound") {
         res.status(404).json({
