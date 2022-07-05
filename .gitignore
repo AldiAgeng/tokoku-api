@@ -1,5 +1,5 @@
 node_modules
 coverage
 .env
-public/uploads/products/*
-public/uploads/users/*
+public/uploads/products/*.jpg
+public/uploads/users/*.jpg
