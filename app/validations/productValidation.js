@@ -3,7 +3,7 @@ const { body } = require("express-validator");
 module.exports = {
   productDataValidate: [
     body("name", "Name is required").exists(),
-    body("picture", "Picture is required").exists(),
+    // body("picture", "Picture is required").exists(),
     body("price", "Price is required").exists(),
     body("price", "Price is not valid").isNumeric(),
     body("location", "Location is required").exists(),

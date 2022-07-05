@@ -1,3 +1,5 @@
 node_modules
 coverage
 .env
+public/uploads/prducts/*
+public/uploads/users/*

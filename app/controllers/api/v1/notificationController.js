@@ -8,10 +8,8 @@ module.exports = {
       const buyer = await notificationServices.findNotificationBuyer(user);
       res.json({
         status: "success",
-        data: {
-          seller,
-          buyer,
-        },
+        seller,
+        buyer,
       });
     } catch (error) {
       res.status(500).json({

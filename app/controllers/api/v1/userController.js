@@ -1,5 +1,5 @@
-const user = require("../../../models/user");
 const userServices = require("../../../services/userServices");
+
 module.exports = {
   async register(req, res) {
     try {
@@ -49,18 +49,25 @@ module.exports = {
     res.status(200).json({
       status: "success",
       data: req.user,
-    })
+    });
   },
 
   async update(req, res) {
     try {
-      const id = req.params.id;
-      const user = req.body;
-      const userData = await userServices.update(id, user);
-      res.status(200).json({
-        status: "success",
-        data: userData,
-      });
+      if (req.file) {
+        const url = req.file.filename;
+        await userServices.update(req.user.id, req.body, url);
+        res.status(200).json({
+          status: "success",
+          message: "user updated successfully",
+        });
+      } else {
+        await userServices.update(req.user.id, req.body);
+        res.status(200).json({
+          status: "success",
+          message: "user updated successfully",
+        });
+      }
     } catch (error) {
       if (error.name === "usertNotFound") {
         res.status(404).json({
@@ -72,7 +79,7 @@ module.exports = {
           name: error.name,
           message: error.message,
         });
-      } 
+      }
     }
-  }
+  },
 };
