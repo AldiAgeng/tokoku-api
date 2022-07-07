@@ -3,23 +3,6 @@ const { sequelize } = require("../../models");
 
 const { queryInterface } = sequelize;
 
-beforeAll(async () => {
-  await queryInterface.bulkInsert(
-    "Orders",
-    [
-      {
-        price: 1000,
-        status: "pending",
-        id_product: 1,
-        id_user: 1,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    ],
-    {}
-  );
-});
-
 afterAll(async () => {
   await queryInterface.bulkDelete("Orders", null, {
     truncate: true,
@@ -30,73 +13,175 @@ afterAll(async () => {
 describe("orderServices", () => {
   describe("createOrder", () => {
     it("should create data order", () => {
-      const order = {
+      const data = {
         price: 1000,
-        status: "pending",
+        status: "bid",
         id_product: 1,
         id_user: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       };
 
-      const result = orderServices.createOrder(order);
-
-      expect(result).toBeDefined();
-      expect(result.price).toBe(1000);
-      expect(result.status).toBe("pending");
-      expect(result.id_product).toBe(1);
-      expect(result.id_user).toBe(1);
-    });
-  });
-
-  describe("historyOrder", () => {
-    it("should return data order", () => {
-      mockUser = {
+      const user = {
         id: 1,
       };
 
-      const result = orderServices.history(mockUser.id);
+      const url = "http://localhost:3000/orders/1";
 
-      expect(result).toBeDefined();
+      return orderServices.createOrder(data, user, url);
+    });
+
+    it("should throw error", () => {
+      try {
+        orderServices.createOrder();
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
+      }
     });
   });
 
-  describe("notification", () => {
-    it("should return data order", () => {
-      mockUser = {
+  describe("findBidProduct", () => {
+    it("should return data product", async () => {
+      const user = {
         id: 1,
       };
 
-      const result = orderServices.notification(mockUser.id);
+      const product = await orderServices.findBidProduct(user);
 
-      expect(result).toBeDefined();
+      expect(product).toBeDefined();
+    });
+
+    it("should throw error", async () => {
+      try {
+        await orderServices.findBidProduct();
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
+      }
     });
   });
 
-  describe("findOrder", () => {
-    it("should return data order", () => {
-      mockOrder = {
+  describe("findById", () => {
+    it("should return data order", async () => {
+      const order = await orderServices.findById(1);
+
+      expect(order).toBeDefined();
+    });
+
+    it("should throw error orderNotFound", async () => {
+      try {
+        await orderServices.findById();
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
+      }
+    });
+  });
+
+  describe("updateStatus", () => {
+    it("should return data order", async () => {
+      const id = 1;
+      const data = {
+        status: "accepted",
+      };
+
+      const order = await orderServices.updateStatus(id, data);
+
+      expect(order).toBeDefined();
+    });
+
+    it("should throw error orderNotFound", async () => {
+      try {
+        await orderServices.updateStatus();
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
+      }
+    });
+  });
+
+  describe("findOrderByUser", () => {
+    it("should return data order", async () => {
+      const user = {
         id: 1,
       };
-      const result = orderServices.findOrder(mockOrder.id);
 
-      expect(result).toBeDefined();
+      const order = await orderServices.findOrderByUser(user);
+
+      expect(order).toBeDefined();
+    });
+
+    it("should throw error", async () => {
+      try {
+        await orderServices.findOrderByUser();
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
+      }
     });
   });
 
   describe("updateOrder", () => {
-    it("should return data order", () => {
-      mockUser = {
+    it("should return data order", async () => {
+      const id = 1;
+      const data = {
+        price: 1000,
+      };
+
+      const order = await orderServices.updateOrder(id, data.price);
+
+      expect(order).toBeDefined();
+    });
+
+    it("should throw error", async () => {
+      try {
+        await orderServices.updateOrder();
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
+      }
+    });
+  });
+
+  // history
+  describe("historySeller", () => {
+    it("should return data order", async () => {
+      const user = {
         id: 1,
       };
-      const mockBody = {
-        price: 1000,
-        status: "deal",
-        id_product: 1,
-        id_user: mockUser.id,
+
+      const order = await orderServices.historySeller(user);
+
+      expect(order).toBeDefined();
+    });
+    it("should throw error", async () => {
+      try {
+        await orderServices.historySeller();
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
+      }
+    });
+  });
+
+  describe("historyBuyer", () => {
+    it("should return data order", async () => {
+      const user = {
+        id: 1,
       };
 
-      const result = orderServices.update(mockUser.id, mockBody);
+      const order = await orderServices.historyBuyer(user);
 
-      expect(result).toBeDefined();
+      expect(order).toBeDefined();
+    });
+    it("should throw error", async () => {
+      try {
+        await orderServices.historyBuyer();
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
+      }
     });
   });
 });
