@@ -25,7 +25,7 @@ module.exports = {
   },
   async find(data) {
     try {
-      const product = await productRepository.find(data.params.id);
+      const product = await productRepository.find(data.id);
       if (!product) {
         throw {
           name: "productNotFound",

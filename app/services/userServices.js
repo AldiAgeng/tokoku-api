@@ -4,10 +4,10 @@ const { encryptPassword, checkPassword, createToken } = require("../utils/authUt
 module.exports = {
   async register(data) {
     try {
-      const name = data.body.name;
-      const email = data.body.email;
+      const name = data.name;
+      const email = data.email;
 
-      const password = await encryptPassword(data.body.password);
+      const password = await encryptPassword(data.password);
       return userRepository.create({ name, email, password });
     } catch (error) {
       throw error;
@@ -16,8 +16,8 @@ module.exports = {
 
   async login(data) {
     try {
-      const email = data.body.email;
-      const password = data.body.password;
+      const email = data.email;
+      const password = data.password;
 
       const user = await userRepository.findByEmail(email.toLowerCase());
       if (!user) {

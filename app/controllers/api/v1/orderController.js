@@ -42,11 +42,11 @@ module.exports = {
     try {
       const id = req.params.id;
       const data = req.body;
-      const order = await orderServices.updateStatus(id, data);
+      await orderServices.updateStatus(id, data);
       await notificationServices.createNotification(id);
       res.json({
         status: "success",
-        order,
+        message: "order updated successfully",
       });
     } catch (error) {
       if (error.name === "orderNotFound") {
@@ -101,11 +101,11 @@ module.exports = {
     try {
       const id = req.params.id;
       const data = req.body.price;
-      const order = await orderServices.updateOrder(id, data);
+      await orderServices.updateOrder(id, data);
       await notificationServices.createNotification(id);
       res.json({
         status: "success",
-        order,
+        message: "order updated successfully",
       });
     } catch (error) {
       if (error.name === "orderNotFound") {

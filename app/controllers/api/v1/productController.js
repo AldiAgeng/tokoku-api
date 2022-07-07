@@ -41,7 +41,7 @@ module.exports = {
   },
   async find(req, res) {
     try {
-      const id = req;
+      const id = req.params;
       const product = await productServices.find(id);
       res.status(200).json({
         status: "success",
@@ -94,10 +94,10 @@ module.exports = {
   async delete(req, res) {
     try {
       const id = req.params.id;
-      const product = await productServices.delete(id);
+      await productServices.delete(id);
       res.status(200).json({
-        status: "data deleted",
-        data: product,
+        status: "success",
+        message: "product deleted successfully",
       });
     } catch (error) {
       if (error.name === "productNotFound") {
