@@ -1,11 +1,30 @@
 const userRepository = require("../userRepository");
 
 describe("userRepository", () => {
+  describe("find", () => {
+    it("should return a user by id", async () => {
+      const user = await userRepository.find(1);
+
+      expect(user).toBeDefined();
+    });
+  });
+
+  describe("findByEmail", () => {
+    it("should return a user by email", async () => {
+      data = {
+        email: "ujang@gmail.com",
+      };
+      const user = await userRepository.findByEmail(data.email);
+
+      expect(user).toBeDefined();
+    });
+  });
+
   describe("create", () => {
     it("should return data users", () => {
       const mockBody = {
-        name: "Aldi Ageng",
-        email: "aldiageng48@gmail.com",
+        name: "Ujang",
+        email: "ujang@gmail.com",
         password: "123456",
       };
 
@@ -15,28 +34,18 @@ describe("userRepository", () => {
     });
   });
 
-  describe("find", () => {
-    it("should return a user by id", async () => {
-      const user = await userRepository.find(1);
-
-      expect(user.name).toBe("Aldi Ageng");
-      expect(user.email).toBe("aldiageng48@gmail.com");
-      expect(user.password).toBe("123456");
-    });
-  });
-
   describe("update", () => {
     it("should update a user", async () => {
-      const user = await userRepository.update(1, {
-        name: "Aldi Ageng",
-        email: "aldiageng48@gmail.com",
-        password: "123456",
-        picture: "https://i.pravatar.cc/300",
+      const mockBody = {
+        name: "Ujang",
         phone_number: "081234567890",
-        address: "Jl. Raya Bohongan",
-      });
+        address: "Jl. Boongan",
+      };
+
+      const user = await userRepository.update(1, mockBody, "picture");
 
       expect(user.length).toBe(1);
+      expect(user).toBeDefined();
     });
   });
 });

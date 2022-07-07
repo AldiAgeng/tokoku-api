@@ -1,27 +1,8 @@
-const productServices = require("../productService");
+const productServices = require("../productServices");
+
 const { sequelize } = require("../../models");
 
 const { queryInterface } = sequelize;
-
-beforeAll(async () => {
-  await queryInterface.bulkInsert(
-    "Products",
-    [
-      {
-        name: "Sepatu Futsal Putih",
-        picture: "https://i.pravatar.cc/300",
-        price: 1000,
-        location: "Bandung",
-        description: "Sepatu futsal putih, bahan berkualitas",
-        id_category_product: 1,
-        id_user: 1,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    ],
-    {}
-  );
-});
 
 afterAll(async () => {
   await queryInterface.bulkDelete("Products", null, {
@@ -31,98 +12,158 @@ afterAll(async () => {
 });
 
 describe("productServices", () => {
-  describe("getAllProduct", () => {
-    it("should return data products", () => {
-      const data = productServices.getAllProduct();
+  describe("findProductByUser", () => {
+    it("should return data product", async () => {
+      const user = 1;
 
-      expect(data).toBeDefined();
+      const product = await productServices.findProductByUser(user);
+
+      expect(product).toBeDefined();
+    });
+
+    it("should throw error", async () => {
+      try {
+        await productServices.findProductByUser();
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
+      }
     });
   });
 
-  describe("getProductById", () => {
+  describe("create", () => {
     it("should return data products", () => {
-      const data = productServices.getProductById(1);
-
-      expect(data).toBeDefined();
-    });
-  });
-
-  describe("createProduct", () => {
-    it("should return data products", () => {
-      const mockUser = {
-        id: 1,
-      };
-      const mockCategoryProduct = {
-        id: 1,
-      };
-      const data = productServices.createProduct({
+      const data = {
         name: "Sepatu Futsal Putih",
         picture: "https://i.pravatar.cc/300",
         price: 1000,
         location: "Bandung",
         description: "Sepatu futsal putih, bahan berkualitas",
-        id_category_product: mockCategoryProduct.id,
-        id_user: mockUser.id,
-      });
+        id_category_product: 1,
+      };
 
-      expect(data).toBeDefined();
+      const id_user = 1;
+
+      const url = "https://i.pravatar.cc/300";
+
+      const product = productServices.create(data, id_user, url);
+
+      expect(product).toBeDefined();
     });
   });
 
-  describe("getProductByUser", () => {
-    it("should return data products", () => {
-      const mockUser = {
-        id: 1,
+  describe("find", () => {
+    it("should return error productNotFound", async () => {
+      const data = {
+        id: 100,
       };
-      const data = productServices.getProductByUser(mockUser.id);
 
-      expect(data).toBeDefined();
+      try {
+        await productServices.find(data);
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
+      }
+    });
+    it("should return data product", async () => {
+      const data = {
+        id: 2,
+      };
+
+      const product = await productServices.find(data);
+
+      expect(product).toBeDefined();
     });
   });
 
-  describe("updateProduct", () => {
-    it("should return data products", () => {
-      const mockUser = {
-        id: 1,
-      };
-      const mockCategoryProduct = {
-        id: 1,
+  describe("update", () => {
+    it("should return data product", async () => {
+      const id = 2;
+      const data = {
+        name: "Sepatu Futsal Putih",
+        price: 1000,
+        location: "Bandung",
+        description: "Sepatu futsal putih, bahan berkualitas",
+        id_category_product: 1,
       };
 
-      const mockProduct = {
-        id: 1,
+      const url = "http://localhost:3000/products/1";
+
+      const product = await productServices.update(id, data, url);
+
+      expect(product).toBeDefined();
+    });
+
+    it("should return error product not found", async () => {
+      const id = 100;
+      const data = {
         name: "Sepatu Futsal Putih",
         picture: "https://i.pravatar.cc/300",
         price: 1000,
         location: "Bandung",
         description: "Sepatu futsal putih, bahan berkualitas",
-        id_category_product: mockCategoryProduct.id,
-        id_user: mockUser.id,
+        id_category_product: 1,
+        id_user: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       };
 
-      const data = productServices.updateProduct(mockProduct.id, {
-        name: "Sepatu Futsal Merah",
-        picture: "https://i.pravatar.cc/300",
-        price: 1000,
-        location: "Bandung",
-        description: "Sepatu futsal putih, bahan berkualitas",
-        id_category_product: mockCategoryProduct.id,
-        id_user: mockUser.id,
-      });
+      const url = "http://localhost:3000/products/1";
 
-      expect(data).toBeDefined();
+      try {
+        await productServices.update(id, data, url);
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
+      }
     });
   });
 
-  describe("deleteProduct", () => {
-    it("should return data products", () => {
-      mockProduct = {
-        id: 1,
-      };
+  describe("delete", () => {
+    it("should return data product", async () => {
+      const id = 2;
 
-      const data = productServices.deleteProduct(mockProduct.id);
+      const product = await productServices.delete(id);
 
-      expect(data).toBeDefined();
+      expect(product).toBeDefined();
+    });
+
+    it("should return error product not found", async () => {
+      const id = 100;
+
+      try {
+        await productServices.delete(id);
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
+      }
+    });
+  });
+
+  describe("findAllAvailable", () => {
+    it("should return data product", async () => {
+      const product = await productServices.findAllAvailable();
+
+      expect(product).toBeDefined();
+    });
+
+    it("should return error", async () => {
+      try {
+        await productServices.findAllAvailable();
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
+      }
+    });
+  });
+
+  describe("filterByCategory", () => {
+    it("should return data product", async () => {
+      const category = "Hobi";
+
+      const product = await productServices.filterByCategory(category);
+
+      expect(product).toBeDefined();
     });
   });
 });
