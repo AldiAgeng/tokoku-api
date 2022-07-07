@@ -3,7 +3,7 @@ const userServices = require("../../../services/userServices");
 module.exports = {
   async register(req, res) {
     try {
-      const data = req;
+      const data = req.body;
       const user = await userServices.register(data);
       res.status(201).json({
         status: "success",
@@ -19,7 +19,7 @@ module.exports = {
 
   async login(req, res) {
     try {
-      const data = req;
+      const data = req.body;
       const user = await userServices.login(data);
       res.status(200).json({
         status: "success",
