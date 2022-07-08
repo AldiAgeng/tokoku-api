@@ -1,4 +1,5 @@
 const userRepository = require("../userRepository");
+const { encryptPassword } = require("../../utils/authUtils");
 
 describe("userRepository", () => {
   describe("find", () => {
@@ -21,11 +22,11 @@ describe("userRepository", () => {
   });
 
   describe("create", () => {
-    it("should return data users", () => {
+    it("should return data users", async () => {
       const mockBody = {
-        name: "Ujang",
-        email: "ujang@gmail.com",
-        password: "123456",
+        name: "Budi",
+        email: "budi@gmail.com",
+        password: await encryptPassword("123456"),
       };
 
       const user = userRepository.create(mockBody);
@@ -37,7 +38,7 @@ describe("userRepository", () => {
   describe("update", () => {
     it("should update a user", async () => {
       const mockBody = {
-        name: "Ujang",
+        name: "Budi",
         phone_number: "081234567890",
         address: "Jl. Boongan",
       };

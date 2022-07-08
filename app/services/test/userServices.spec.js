@@ -47,7 +47,7 @@ describe("userServices", () => {
     it("should return error wrongEmailPassword", async () => {
       try {
         const data = {
-          email: "ujang@mail.com",
+          email: "ujangx@gmail.com",
           password: "123456",
         };
 
@@ -77,6 +77,24 @@ describe("userServices", () => {
         expect(error).toHaveProperty("message");
       }
     });
+
+    it("should return data user and token", async () => {
+      try {
+        const data = {
+          email: "ujang@gmail.com",
+          password: "123456",
+        };
+
+        const result = await userServices.login(data);
+
+        expect(result).toHaveProperty("id");
+        expect(result).toHaveProperty("name");
+        expect(result).toHaveProperty("email");
+        expect(result).toHaveProperty("token");
+      } catch (error) {
+        throw error;
+      }
+    });
   });
 
   describe("find", () => {
@@ -94,9 +112,10 @@ describe("userServices", () => {
       const id = 1;
       const user = {
         name: "Ujang",
-        email: "ujang@gmail.com",
+        phone_number: "081234567890",
+        address: "Jl. Boongan",
       };
-      const url = "http://localhost:3000/upload/image.jpg";
+      const url = "picture";
 
       const data = await userServices.update(id, user, url);
 

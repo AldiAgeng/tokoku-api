@@ -7,6 +7,9 @@ app.use(express.static("public"));
 
 require("dotenv").config();
 
+// install cors
+app.use(cors());
+
 /** Install request logger */
 app.use(morgan("dev"));
 
@@ -18,8 +21,5 @@ app.use(express.json());
 
 /** Install Router */
 app.use(router);
-
-// install cors
-app.use(cors());
 
 module.exports = app;
