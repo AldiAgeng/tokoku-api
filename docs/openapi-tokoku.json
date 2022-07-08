@@ -1,0 +1,1998 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "TOKOKU",
+    "description": "This is a sample server tokoku server",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://tokoku-app",
+      "description": "Main (production) server"
+    },
+    {
+      "url": "http://localhost:8000",
+      "description": "Internal staging server for develop"
+    },
+    {
+      "url": "",
+      "description": "Internal staging server for develop"
+    }
+  ],
+  "paths": {
+    "/api/v1/auth/register": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Add a new user",
+        "description": "Register to add new user data",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "User1"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "user1@mail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "user1"
+                  }
+                }
+              }
+            },
+            "aplication/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "User1"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "user1@mail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "user1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/User1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Login user",
+        "description": "Login using email and password to access the system",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "user1@mail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "user1"
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "user1@mail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "user1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "User1"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "user1@mail.com"
+                        },
+                        "token": {
+                          "type": "string",
+                          "example": "xxxxxxx"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/WrongEmailPassword"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/user": {
+      "get": {
+        "tags": ["auth"],
+        "summary": "Get current user data",
+        "description": "Display data of currently logged in users",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/User1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["auth"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Update user",
+        "description": "Updating user data",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "User1"
+                  },
+                  "picture": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "phone_number": {
+                    "type": "integer",
+                    "example": 8899
+                  },
+                  "address": {
+                    "type": "string",
+                    "example": "Jakarta"
+                  }
+                }
+              }
+            },
+            "aplication/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "User1"
+                  },
+                  "picture": {
+                    "type": "string",
+                    "example": "user1.jpg"
+                  },
+                  "phone_number": {
+                    "type": "integer",
+                    "example": 8899
+                  },
+                  "address": {
+                    "type": "string",
+                    "example": "Jakarta"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "data updated"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "user updated successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/api/v1/seller/category": {
+      "get": {
+        "tags": ["seller"],
+        "summary": "Get all category",
+        "description": "find all category",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AllCategory"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/api/v1/seller/category/{id}": {
+      "get": {
+        "tags": ["seller"],
+        "summary": "Get category by ID",
+        "description": "Get Category By Id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Category3"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "CategoryNotFound"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Category is not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/api/v1/seller/product": {
+      "post": {
+        "tags": ["seller"],
+        "summary": "Add a new product",
+        "description": "Add new product data for sale",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Book"
+                  },
+                  "picture": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "price": {
+                    "type": "integer",
+                    "example": 50000
+                  },
+                  "location": {
+                    "type": "string",
+                    "example": "Jakarta"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "blablabla"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "available"
+                  },
+                  "id_category_product": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            },
+            "aplication/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Book"
+                  },
+                  "picture": {
+                    "type": "string",
+                    "example": "book.jpg"
+                  },
+                  "price": {
+                    "type": "integer",
+                    "example": 50000
+                  },
+                  "location": {
+                    "type": "string",
+                    "example": "Jakarta"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "blablabla"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "available"
+                  },
+                  "id_category_product": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Product1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["seller"],
+        "summary": "Get all products",
+        "description": "display all product data for sale",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AllProducts"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/api/v1/seller/product/{id}": {
+      "get": {
+        "tags": ["seller"],
+        "summary": "Get product by ID",
+        "description": "Get Product By Id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Product2"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["seller"],
+        "summary": "Update Product",
+        "description": "Updating product data by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Book"
+                  },
+                  "picture": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "price": {
+                    "type": "integer",
+                    "example": 50000
+                  },
+                  "location": {
+                    "type": "string",
+                    "example": "Jakarta"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "blablabla"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "available"
+                  },
+                  "id_category_product": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            },
+            "aplication/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Book"
+                  },
+                  "picture": {
+                    "type": "string",
+                    "example": "book.jpg"
+                  },
+                  "price": {
+                    "type": "integer",
+                    "example": 70000
+                  },
+                  "location": {
+                    "type": "string",
+                    "example": "Jakarta"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "blablabla"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "sold"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "data updated"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "product updated successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["seller"],
+        "summary": "Delete product",
+        "description": "Delete Product by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": "product deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/api/v1/seller/order": {
+      "get": {
+        "tags": ["seller"],
+        "summary": "Get all order",
+        "description": "View all orders from buyers",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Order1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/api/v1/seller/order/{id}": {
+      "get": {
+        "tags": ["seller"],
+        "summary": "Get order by ID",
+        "description": "Get Order by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Order1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["seller"],
+        "summary": "Update order",
+        "description": "Seller get order by id to update order status",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "aplication/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "example": "accepted"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "product updated successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/api/v1/buyer/product": {
+      "get": {
+        "tags": ["buyer"],
+        "summary": "Get all products",
+        "description": "Get all products to buy",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Product1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/api/v1/buyer/product/{id}": {
+      "get": {
+        "tags": ["buyer"],
+        "summary": "Get product by ID",
+        "description": "Get product by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Product1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/api/v1/buyer/order": {
+      "post": {
+        "tags": ["buyer"],
+        "summary": "Add new order",
+        "description": "Create Order",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "price": {
+                    "type": "integer",
+                    "example": 50000
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "bid"
+                  },
+                  "id_product": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            },
+            "aplication/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "price": {
+                    "type": "integer",
+                    "example": 50000
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "bid"
+                  },
+                  "id_product": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Order1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "badRequest"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["buyer"],
+        "summary": "Get all order",
+        "description": "Display all order list",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Order1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/api/v1/buyer/order/{id}": {
+      "get": {
+        "tags": ["buyer"],
+        "summary": "Get order by ID",
+        "description": "Display order data by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Order1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["buyer"],
+        "summary": "Update order",
+        "description": "buyer get order by id to update order price",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "aplication/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "price": {
+                    "type": "integer",
+                    "example": 60000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "order updated successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/api/v1/history": {
+      "get": {
+        "tags": ["history"],
+        "summary": "Get all history",
+        "description": "Show all history",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "Seller": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Order1"
+                      }
+                    },
+                    "Buyer": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Order1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/api/v1/history/{id}": {
+      "get": {
+        "tags": ["history"],
+        "summary": "Get history by ID",
+        "description": "Get history by Id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Order1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/api/v1/notification": {
+      "get": {
+        "tags": ["notification"],
+        "summary": "Get all notification",
+        "description": "Get all notification",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "Seller": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/NotificationSeller"
+                      }
+                    },
+                    "Buyer": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/NotificationBuyer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/api/v1/notification/{id}": {
+      "get": {
+        "tags": ["notification"],
+        "summary": "Get notification by ID",
+        "description": "Get Notification by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/NotificationBuyer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "User1": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "example": "User1"
+          },
+          "email": {
+            "type": "string",
+            "example": "user1@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "user1"
+          },
+          "picture": {
+            "type": "string",
+            "example": "user1.jpg"
+          },
+          "phone_number": {
+            "type": "integer",
+            "example": "8888"
+          },
+          "address": {
+            "type": "string",
+            "example": "Jakarta"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "IdUser1": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "example": "User1"
+          },
+          "email": {
+            "type": "string",
+            "example": "user1@mail.com"
+          },
+          "picture": {
+            "type": "string",
+            "example": "user1.jpg"
+          },
+          "phone_number": {
+            "type": "integer",
+            "example": "8899"
+          },
+          "address": {
+            "type": "string",
+            "example": "Jakarta"
+          }
+        }
+      },
+      "IdUser2": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": "2"
+          },
+          "name": {
+            "type": "string",
+            "example": "User2"
+          },
+          "email": {
+            "type": "string",
+            "example": "user2@mail.com"
+          },
+          "picture": {
+            "type": "string",
+            "example": "user2.jpg"
+          },
+          "phone_number": {
+            "type": "integer",
+            "example": "5555"
+          },
+          "address": {
+            "type": "string",
+            "example": "Bandung"
+          }
+        }
+      },
+      "AllProducts": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/Product1"
+          },
+          {
+            "$ref": "#/components/schemas/Product2"
+          }
+        ]
+      },
+      "Product1": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Book"
+          },
+          "picture": {
+            "type": "string",
+            "example": "book.jpg"
+          },
+          "price": {
+            "type": "integer",
+            "example": 50000
+          },
+          "location": {
+            "type": "string",
+            "example": "Jakarta"
+          },
+          "description": {
+            "type": "string",
+            "example": "blablabla"
+          },
+          "status": {
+            "type": "string",
+            "example": "available"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "Category_product": {
+            "$ref": "#/components/schemas/Category1"
+          },
+          "Users": {
+            "$ref": "#/components/schemas/IdUser1"
+          }
+        }
+      },
+      "Product2": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 2
+          },
+          "name": {
+            "type": "string",
+            "example": "Bicycle"
+          },
+          "picture": {
+            "type": "string",
+            "example": "bicycle.jpg"
+          },
+          "price": {
+            "type": "integer",
+            "example": 700000
+          },
+          "location": {
+            "type": "string",
+            "example": "Bandung"
+          },
+          "description": {
+            "type": "string",
+            "example": "blablabla"
+          },
+          "status": {
+            "type": "string",
+            "example": "available"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "Category_product": {
+            "$ref": "#/components/schemas/Category2"
+          },
+          "Users": {
+            "$ref": "#/components/schemas/IdUser2"
+          }
+        }
+      },
+      "IdProduct1": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Book"
+          },
+          "picture": {
+            "type": "string",
+            "example": "book.jpg"
+          },
+          "price": {
+            "type": "integer",
+            "example": 70000
+          },
+          "status": {
+            "type": "string",
+            "example": "available"
+          }
+        }
+      },
+      "Order1": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "price": {
+            "type": "integer",
+            "example": 50000
+          },
+          "status": {
+            "type": "string",
+            "example": "bid"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "Product": {
+            "$ref": "#/components/schemas/IdProduct1"
+          },
+          "Users": {
+            "$ref": "#/components/schemas/IdUser2"
+          }
+        }
+      },
+      "AllCategory": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/Category1"
+          },
+          {
+            "$ref": "#/components/schemas/Category2"
+          },
+          {
+            "$ref": "#/components/schemas/Category3"
+          },
+          {
+            "$ref": "#/components/schemas/Category4"
+          },
+          {
+            "$ref": "#/components/schemas/Category5"
+          }
+        ]
+      },
+      "Category1": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Hobi"
+          }
+        }
+      },
+      "Category2": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 2
+          },
+          "name": {
+            "type": "string",
+            "example": "Kendaraan"
+          }
+        }
+      },
+      "Category3": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 3
+          },
+          "name": {
+            "type": "string",
+            "example": "Baju"
+          }
+        }
+      },
+      "Category4": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 4
+          },
+          "name": {
+            "type": "string",
+            "example": "Elektronik"
+          }
+        }
+      },
+      "Category5": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 5
+          },
+          "name": {
+            "type": "string",
+            "example": "Kesehatan"
+          }
+        }
+      },
+      "NotificationSeller": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 5
+          },
+          "id_order": {
+            "type": "string",
+            "example": "Kesehatan"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "Order": {
+            "type": "object"
+          }
+        }
+      },
+      "NotificationBuyer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 5
+          },
+          "id_order": {
+            "type": "string",
+            "example": "Kesehatan"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "Order": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "BadRequest",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "badRequest"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "please fill all required fields and make sure the data is valid"
+                }
+              }
+            }
+          }
+        }
+      },
+      "WrongEmailPassword": {
+        "description": "Email or Password Are Wrong",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "wrongEmailPassword"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "email or password are wrong"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "notLogin"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "You are not login/access_token is wrong"
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

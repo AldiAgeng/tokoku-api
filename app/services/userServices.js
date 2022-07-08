@@ -1,5 +1,6 @@
 const userRepository = require("../repositories/userRepository");
 const { encryptPassword, checkPassword, createToken } = require("../utils/authUtils");
+const { deletePictureUser } = require("../utils/delete");
 
 module.exports = {
   async register(data) {
@@ -64,6 +65,11 @@ module.exports = {
           message: "User is not found",
         };
       }
+
+      if (url) {
+        deletePictureUser(userData.picture);
+      }
+
       return userRepository.update(id, user, url);
     } catch (error) {
       throw error;
