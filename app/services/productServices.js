@@ -1,4 +1,5 @@
 const productRepository = require("../repositories/productRepository");
+const { deletePictureProduct } = require("../utils/delete");
 
 module.exports = {
   async findProductByUser(user) {
@@ -47,6 +48,10 @@ module.exports = {
         };
       }
 
+      if (url) {
+        deletePictureProduct(product.picture);
+      }
+
       return productRepository.update(id, data, url);
     } catch (error) {
       throw error;
@@ -62,6 +67,8 @@ module.exports = {
           message: "Product is not found",
         };
       }
+
+      deletePictureProduct(product.picture);
 
       return productRepository.delete(id);
     } catch (error) {

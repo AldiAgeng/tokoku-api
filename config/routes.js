@@ -5,12 +5,17 @@ const checkValidate = require("../app/middlewares/checkValidate");
 const middlewares = require("../app/middlewares/authorization");
 const upload = require("../app/utils/upload");
 
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("../docs/openapi-tokoku.json");
+
 const apiRouter = express.Router();
 
 /**
  * TODO: Implement your own API
  *       implementations
  */
+apiRouter.use("/documentation", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 apiRouter.post("/api/v1/auth/register", userValidation.registerDataValidate, checkValidate, controllers.api.v1.userController.register);
 apiRouter.post("/api/v1/auth/login", userValidation.loginDataValidate, checkValidate, controllers.api.v1.userController.login);
 apiRouter.get("/api/v1/auth/user", middlewares.authorize, controllers.api.v1.userController.getCurrentUser);
