@@ -30,7 +30,7 @@ module.exports = {
   },
 
   createToken(payload) {
-    return jwt.sign(payload, process.env.JWT_SIGNATURE_KEY, {
+    return jwt.sign(payload, process.env.JWT_SIGNATURE_KEY || "SECRET", {
       expiresIn: "1h",
     });
   },

@@ -14,7 +14,7 @@ afterAll(async () => {
 describe("productServices", () => {
   describe("findProductByUser", () => {
     it("should return data product", async () => {
-      const user = 1;
+      const user = 2;
 
       const product = await productServices.findProductByUser(user);
 
@@ -32,10 +32,9 @@ describe("productServices", () => {
   });
 
   describe("create", () => {
-    it("should return data products", () => {
+    it("should return data products", async () => {
       const data = {
         name: "Sepatu Futsal Putih",
-        picture: "https://i.pravatar.cc/300",
         price: 1000,
         location: "Bandung",
         description: "Sepatu futsal putih, bahan berkualitas",
@@ -46,9 +45,34 @@ describe("productServices", () => {
 
       const url = "https://i.pravatar.cc/300";
 
-      const product = productServices.create(data, id_user, url);
+      const product = await productServices.create(data, id_user, url);
 
       expect(product).toBeDefined();
+    });
+
+    it("should throw error", async () => {
+      try {
+        const data = {
+          name: "Sepatu Futsal Putih",
+          price: 1000,
+          location: "Bandung",
+          description: "Sepatu futsal putih, bahan berkualitas",
+          id_category_product: 1,
+        };
+
+        const id_user = 1;
+
+        const url = "https://i.pravatar.cc/300";
+
+        await productServices.create(data, id_user, url);
+        await productServices.create(data, id_user, url);
+        await productServices.create(data, id_user, url);
+        await productServices.create(data, id_user, url);
+        await productServices.create(data, id_user, url);
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
+      }
     });
   });
 
@@ -164,6 +188,15 @@ describe("productServices", () => {
       const product = await productServices.filterByCategory(category);
 
       expect(product).toBeDefined();
+    });
+
+    it("should return error", async () => {
+      try {
+        await productServices.filterByCategory(new Date());
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
+      }
     });
   });
 });
