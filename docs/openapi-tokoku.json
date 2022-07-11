@@ -13,10 +13,6 @@
     {
       "url": "http://localhost:8000",
       "description": "Internal staging server for develop"
-    },
-    {
-      "url": "",
-      "description": "Internal staging server for develop"
     }
   ],
   "paths": {
@@ -308,118 +304,6 @@
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
-          },
-          "500": {
-            "description": "Internal Service Error"
-          }
-        }
-      }
-    },
-    "/api/v1/seller/category": {
-      "get": {
-        "tags": ["seller"],
-        "summary": "Get all category",
-        "description": "find all category",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "aplication/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/AllCategory"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "500": {
-            "description": "Internal Service Error"
-          }
-        }
-      }
-    },
-    "/api/v1/seller/category/{id}": {
-      "get": {
-        "tags": ["seller"],
-        "summary": "Get category by ID",
-        "description": "Get Category By Id",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "aplication/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/Category3"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "example": "CategoryNotFound"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Category is not found"
-                    }
-                  }
-                }
-              }
-            }
           },
           "500": {
             "description": "Internal Service Error"
@@ -1313,6 +1197,102 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/api/v1/category": {
+      "get": {
+        "tags": ["category"],
+        "summary": "Get all category",
+        "description": "find all category",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AllCategory"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/api/v1/category/{id}": {
+      "get": {
+        "tags": ["category"],
+        "summary": "Get category by ID",
+        "description": "Get Category By Id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Category3"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "CategoryNotFound"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Category is not found"
+                    }
+                  }
+                }
+              }
+            }
           },
           "500": {
             "description": "Internal Service Error"
