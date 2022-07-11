@@ -10,10 +10,17 @@ module.exports = {
         data: user,
       });
     } catch (error) {
-      res.status(500).json({
-        name: error.name,
-        message: error.message,
-      });
+      if (error.name === "badRequest" || error.name === "SequelizeValidationError") {
+        res.status(400).json({
+          name: error.name,
+          message: error.message,
+        });
+      } else {
+        res.status(500).json({
+          name: error.name,
+          message: error.message,
+        });
+      }
     }
   },
 
@@ -31,7 +38,12 @@ module.exports = {
         },
       });
     } catch (error) {
-      if (error.name === "wrongEmailPassword") {
+      if (error.name === "badRequest") {
+        res.status(400).json({
+          name: error.name,
+          message: error.message,
+        });
+      } else if (error.name === "wrongEmailPassword") {
         res.status(401).json({
           name: error.name,
           message: error.message,
@@ -71,6 +83,11 @@ module.exports = {
     } catch (error) {
       if (error.name === "usertNotFound") {
         res.status(404).json({
+          name: error.name,
+          message: error.message,
+        });
+      } else if (error.name === "badRequest" || error.name === "SequelizeValidationError") {
+        res.status(400).json({
           name: error.name,
           message: error.message,
         });

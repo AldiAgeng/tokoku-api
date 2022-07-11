@@ -18,25 +18,33 @@ module.exports = {
   },
   async create(req, res) {
     try {
-      const user = req.user.id;
-      const data = req.body;
-      const url = req.file.filename;
-      const product = await productServices.create(data, user, url);
-      res.status(200).json({
-        status: "success",
-        data: product,
-      });
+      if (req.file) {
+        const user = req.user.id;
+        const data = req.body;
+        const url = req.file.filename;
+        const product = await productServices.create(data, user, url);
+        res.status(200).json({
+          status: "success",
+          data: product,
+        });
+      } else {
+        throw {
+          name: "badRequest",
+          message: "please fill all required fields and make sure the data is valid",
+        };
+      }
     } catch (error) {
-      if (error.name === "badRequest") {
+      if (error.name === "badRequest" || error.name === "SequelizeValidationError") {
         res.status(400).json({
           name: error.name,
           message: error.message,
         });
+      } else {
+        res.status(500).json({
+          name: error.name,
+          message: error.message,
+        });
       }
-      res.status(500).json({
-        name: error.name,
-        message: error.message,
-      });
     }
   },
   async find(req, res) {
@@ -80,6 +88,11 @@ module.exports = {
     } catch (error) {
       if (error.name === "productNotFound") {
         res.status(404).json({
+          name: error.name,
+          message: error.message,
+        });
+      } else if (error.name === "badRequest" || error.name === "SequelizeValidationError") {
+        res.status(400).json({
           name: error.name,
           message: error.message,
         });

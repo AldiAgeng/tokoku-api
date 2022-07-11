@@ -19,7 +19,7 @@ apiRouter.use("/documentation", swaggerUi.serve, swaggerUi.setup(swaggerDocument
 apiRouter.post("/api/v1/auth/register", userValidation.registerDataValidate, checkValidate, controllers.api.v1.userController.register);
 apiRouter.post("/api/v1/auth/login", userValidation.loginDataValidate, checkValidate, controllers.api.v1.userController.login);
 apiRouter.get("/api/v1/auth/user", middlewares.authorize, controllers.api.v1.userController.getCurrentUser);
-apiRouter.put("/api/v1/auth/user", middlewares.authorize, upload.uploadUser.single("picture"), controllers.api.v1.userController.update);
+apiRouter.put("/api/v1/auth/user", middlewares.authorize, upload.uploadUser.single("picture"), userValidation.updateDataValidate, checkValidate, controllers.api.v1.userController.update);
 
 // seller product
 apiRouter.get("/api/v1/seller/product", middlewares.authorize, controllers.api.v1.productController.findProductByUser);

@@ -31,11 +31,12 @@ module.exports = {
           name: error.name,
           message: error.message,
         });
+      } else {
+        res.status(500).json({
+          name: error.name,
+          message: error.message,
+        });
       }
-      res.status(500).json({
-        name: error.name,
-        message: error.message,
-      });
     }
   },
   async updateStatus(req, res) {
@@ -54,11 +55,17 @@ module.exports = {
           name: error.name,
           message: error.message,
         });
+      } else if (error.name === "sequelizeValidationError") {
+        res.status(400).json({
+          name: error.name,
+          message: error.message,
+        });
+      } else {
+        res.status(500).json({
+          name: error.name,
+          message: error.message,
+        });
       }
-      res.status(500).json({
-        name: error.name,
-        message: error.message,
-      });
     }
   },
 
@@ -74,10 +81,17 @@ module.exports = {
         order,
       });
     } catch (error) {
-      res.status(500).json({
-        name: error.name,
-        message: error.message,
-      });
+      if (error.name === "sequelizeValidationError") {
+        res.status(400).json({
+          name: error.name,
+          message: error.message,
+        });
+      } else {
+        res.status(500).json({
+          name: error.name,
+          message: error.message,
+        });
+      }
     }
   },
 
@@ -113,11 +127,17 @@ module.exports = {
           name: error.name,
           message: error.message,
         });
+      } else if (error.name === "sequelizeValidationError") {
+        res.status(400).json({
+          name: error.name,
+          message: error.message,
+        });
+      } else {
+        res.status(500).json({
+          name: error.name,
+          message: error.message,
+        });
       }
-      res.status(500).json({
-        name: error.name,
-        message: error.message,
-      });
     }
   },
 
@@ -154,11 +174,12 @@ module.exports = {
           name: error.name,
           message: error.message,
         });
+      } else {
+        res.status(500).json({
+          name: error.name,
+          message: error.message,
+        });
       }
-      res.status(500).json({
-        name: error.name,
-        message: error.message,
-      });
     }
   },
 };
