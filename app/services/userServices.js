@@ -66,8 +66,17 @@ module.exports = {
         };
       }
 
-      if (url) {
-        deletePictureUser(userData.picture);
+      if (userData.picture !== null) {
+        if (url) {
+          deletePictureUser(userData.picture);
+        }
+      } else {
+        if (!url) {
+          throw {
+            name: "badRequest",
+            message: "please fill all required fields and make sure the data is valid",
+          };
+        }
       }
 
       return userRepository.update(id, user, url);

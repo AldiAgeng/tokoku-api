@@ -2,4 +2,8 @@ node_modules
 coverage
 .env
 public/uploads/products/*.jpg
+public/uploads/products/*.jpeg
+public/uploads/products/*.png
 public/uploads/users/*.jpg
+public/uploads/users/*.jpeg
+public/uploads/users/*.png

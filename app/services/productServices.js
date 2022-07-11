@@ -48,8 +48,17 @@ module.exports = {
         };
       }
 
-      if (url) {
-        deletePictureProduct(product.picture);
+      if (product.picture !== null) {
+        if (url) {
+          deletePictureProduct(product.picture);
+        }
+      } else {
+        if (!url) {
+          throw {
+            name: "badRequest",
+            message: "please fill all required fields and make sure the data is valid",
+          };
+        }
       }
 
       return productRepository.update(id, data, url);

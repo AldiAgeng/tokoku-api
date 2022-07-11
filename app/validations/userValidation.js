@@ -18,4 +18,6 @@ module.exports = {
     body("password").exists().withMessage("Password is required").isLength({ min: 6 }).withMessage("Password must be at least 6 characters long"),
   ],
   loginDataValidate: [body("email", "Email is required").exists(), body("email", "Email is not valid").isEmail(), body("password", "Password is required").exists()],
+
+  updateDataValidate: [body("name", "Name is required").exists(), body("phone_number", "Phone number is required").exists(), body("address", "Address is required").exists()],
 };
