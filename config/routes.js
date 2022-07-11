@@ -33,9 +33,9 @@ apiRouter.get("/api/v1/seller/order", middlewares.authorize, controllers.api.v1.
 apiRouter.get("/api/v1/seller/order/:id", middlewares.authorize, controllers.api.v1.orderController.findById);
 apiRouter.put("/api/v1/seller/order/:id", middlewares.authorize, controllers.api.v1.orderController.updateStatus);
 
-// seller category
-apiRouter.get("/api/v1/seller/category/:id", middlewares.authorize, controllers.api.v1.categoryController.find);
-apiRouter.get("/api/v1/seller/category", middlewares.authorize, controllers.api.v1.categoryController.getAllCategory);
+// category
+apiRouter.get("/api/v1/category/:id", controllers.api.v1.categoryController.find);
+apiRouter.get("/api/v1/category", controllers.api.v1.categoryController.getAllCategory);
 
 // buyer product
 apiRouter.get("/api/v1/buyer/product", controllers.api.v1.productController.findAllAvailable);
