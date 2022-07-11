@@ -1,4 +1,5 @@
 const { Product, CategoryProduct, User } = require("../models");
+const { Op } = require("sequelize");
 
 module.exports = {
   // Seller
@@ -119,7 +120,9 @@ module.exports = {
           model: CategoryProduct,
           attributes: ["id", "name"],
           where: {
-            name: category,
+            name: {
+              [Op.iLike]: `%${category}%`,
+            },
           },
         },
         {
@@ -129,6 +132,34 @@ module.exports = {
       ],
       where: {
         status: "available",
+      },
+      attributes: ["id", "name", "picture", "price", "location", "description", "status"],
+    });
+  },
+  filterByProduct([product]) {
+    return Product.findAll({
+      include: [
+        {
+          model: CategoryProduct,
+          attributes: ["id", "name"],
+        },
+        {
+          model: User,
+          attributes: ["id", "name", "email", "picture", "phone_number", "address"],
+        },
+      ],
+
+      where: {
+        [Op.and]: [
+          {
+            status: "available",
+          },
+          {
+            name: {
+              [Op.iLike]: `%${product}%`,
+            },
+          },
+        ],
       },
       attributes: ["id", "name", "picture", "price", "location", "description", "status"],
     });

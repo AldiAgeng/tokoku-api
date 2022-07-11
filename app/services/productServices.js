@@ -93,9 +93,14 @@ module.exports = {
       throw error;
     }
   },
-  filterByCategory(category) {
+  filter(data) {
     try {
-      return productRepository.filterByCategory(category);
+      if (data.category) {
+        return productRepository.filterByCategory(data.category);
+      }
+      if (data.search) {
+        return productRepository.filterByProduct(data.search);
+      }
     } catch (error) {
       throw error;
     }
