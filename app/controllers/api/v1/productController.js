@@ -130,9 +130,8 @@ module.exports = {
   // buyer
   async findAllAvailable(req, res) {
     try {
-      if (req.query.category) {
-        const upperCaseFirstLetter = req.query.category.charAt(0).toUpperCase() + req.query.category.slice(1).toLowerCase();
-        const products = await productServices.filterByCategory(upperCaseFirstLetter);
+      if (req.query.category || req.query.search) {
+        const products = await productServices.filter(req.query);
         res.status(200).json({
           status: "success",
           data: products,
