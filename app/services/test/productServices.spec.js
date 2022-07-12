@@ -14,7 +14,7 @@ afterAll(async () => {
 describe("productServices", () => {
   describe("findProductByUser", () => {
     it("should return data product", async () => {
-      const user = 2;
+      const user = 1;
 
       const product = await productServices.findProductByUser(user);
 
@@ -37,6 +37,7 @@ describe("productServices", () => {
         name: "Sepatu Futsal Putih",
         price: 1000,
         location: "Bandung",
+        status: "available",
         description: "Sepatu futsal putih, bahan berkualitas",
         id_category_product: 1,
       };
@@ -52,23 +53,9 @@ describe("productServices", () => {
 
     it("should throw error", async () => {
       try {
-        const data = {
-          name: "Sepatu Futsal Putih",
-          price: 1000,
-          location: "Bandung",
-          description: "Sepatu futsal putih, bahan berkualitas",
-          id_category_product: 1,
-        };
-
-        const id_user = 1;
-
         const url = "https://i.pravatar.cc/300";
 
-        await productServices.create(data, id_user, url);
-        await productServices.create(data, id_user, url);
-        await productServices.create(data, id_user, url);
-        await productServices.create(data, id_user, url);
-        await productServices.create(data, id_user, url);
+        await productServices.create(url);
       } catch (error) {
         expect(error).toHaveProperty("name");
         expect(error).toHaveProperty("message");
@@ -107,6 +94,7 @@ describe("productServices", () => {
         name: "Sepatu Futsal Putih",
         price: 1000,
         location: "Bandung",
+        status: "available",
         description: "Sepatu futsal putih, bahan berkualitas",
         id_category_product: 1,
       };
@@ -170,29 +158,41 @@ describe("productServices", () => {
 
       expect(product).toBeDefined();
     });
-
-    it("should return error", async () => {
-      try {
-        await productServices.findAllAvailable();
-      } catch (error) {
-        expect(error).toHaveProperty("name");
-        expect(error).toHaveProperty("message");
-      }
-    });
   });
 
-  describe("filterByCategory", () => {
-    it("should return data product", async () => {
-      const category = "Hobi";
+  describe("filter", () => {
+    it("should return data product by category", async () => {
+      const params = {
+        query: {
+          category: "Hobi",
+        },
+      };
 
-      const product = await productServices.filterByCategory(category);
+      const product = await productServices.filter(params.query);
+
+      expect(product).toBeDefined();
+    });
+
+    it("should return data product by name/search", async () => {
+      const params = {
+        query: {
+          search: "Sepatu",
+        },
+      };
+
+      const product = await productServices.filter(params.query);
 
       expect(product).toBeDefined();
     });
 
     it("should return error", async () => {
       try {
-        await productServices.filterByCategory(new Date());
+        const params = {
+          query: {
+            error: "Sepatu",
+          },
+        };
+        await productServices.filter(params.query.test);
       } catch (error) {
         expect(error).toHaveProperty("name");
         expect(error).toHaveProperty("message");

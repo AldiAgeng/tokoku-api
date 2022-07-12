@@ -45,7 +45,6 @@ describe("OrderRepository", () => {
     it("should return a order by user", async () => {
       const product = await orderRepository.findOrderByUser(1);
 
-      expect(product.length >= 1).toBe(true);
       expect(product).toBeDefined();
     });
   });

@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "http://tokoku-app",
+      "url": "http://tokoku-api",
       "description": "Main (production) server"
     },
     {

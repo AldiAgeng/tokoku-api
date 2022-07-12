@@ -61,16 +61,6 @@ describe("productRepository", () => {
     });
   });
 
-  // describe("countByStatusAndUser", () => {
-  //   it("should count product by status and user", async () => {
-  //     const product = await productRepository.countByStatusAndUser({
-  //       id_user: 1,
-  //     });
-
-  //     console.log("coy", product);
-  //   });
-  // });
-
   describe("findAllAvailable", () => {
     it("should find all product available", async () => {
       const product = await productRepository.findAllAvailable();
@@ -82,7 +72,16 @@ describe("productRepository", () => {
 
   describe("filterByCategory", () => {
     it("should filter product by category", async () => {
-      const product = await productRepository.filterByCategory("Hobi");
+      const product = await productRepository.filterByCategory(["Hobi"]);
+
+      expect(product.length >= 0).toBe(true);
+      expect(product).toBeDefined();
+    });
+  });
+
+  describe("filterBySearch", () => {
+    it("should filter product by search", async () => {
+      const product = await productRepository.filterByCategory(["sepatu"]);
 
       expect(product.length >= 0).toBe(true);
       expect(product).toBeDefined();
