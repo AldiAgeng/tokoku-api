@@ -45,10 +45,10 @@ jobs:
         with:
           cmd: install
 
-      - name: Build dependencies
-        uses: borales/actions-yarn@v3.0.0
-        with:
-          cmd: build
+      # - name: Build dependencies
+      #   uses: borales/actions-yarn@v3.0.0
+      #   with:
+      #     cmd: build
 
       - name: Connect to PostgreSQL
         # Runs a script that creates a PostgreSQL table, populates
