@@ -5,7 +5,7 @@ module.exports = async (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({
       name: "badRequest",
-      message: "please fill all required fields and make sure the data is valid",
+      message: errors.array().map((error) => error.msg),
     });
   }
   next();
