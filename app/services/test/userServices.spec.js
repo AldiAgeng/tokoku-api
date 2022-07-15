@@ -113,6 +113,7 @@ describe("userServices", () => {
       const user = {
         name: "Ujang",
         phone_number: "081234567890",
+        city: "Jakarta",
         address: "Jl. Boongan",
       };
       const url = "picture";

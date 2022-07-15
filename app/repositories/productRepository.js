@@ -13,7 +13,7 @@ module.exports = {
         },
         {
           model: User,
-          attributes: ["id", "name", "email", "picture", "phone_number", "address"],
+          attributes: ["id", "name", "email", "picture", "phone_number", "address", "city"],
         },
       ],
       where: {
@@ -32,7 +32,7 @@ module.exports = {
         },
         {
           model: User,
-          attributes: ["name", "email", "picture", "phone_number", "address"],
+          attributes: ["name", "email", "picture", "phone_number", "address", "city"],
         },
       ],
       where: {
@@ -103,7 +103,7 @@ module.exports = {
         },
         {
           model: User,
-          attributes: ["id", "name", "email", "picture", "phone_number", "address"],
+          attributes: ["id", "name", "email", "picture", "phone_number", "address", "city"],
         },
       ],
       where: {
@@ -127,7 +127,7 @@ module.exports = {
         },
         {
           model: User,
-          attributes: ["id", "name", "email", "picture", "phone_number", "address"],
+          attributes: ["id", "name", "email", "picture", "phone_number", "address", "city"],
         },
       ],
       where: {
@@ -145,7 +145,7 @@ module.exports = {
         },
         {
           model: User,
-          attributes: ["id", "name", "email", "picture", "phone_number", "address"],
+          attributes: ["id", "name", "email", "picture", "phone_number", "address", "city"],
         },
       ],
 

@@ -16,7 +16,7 @@ module.exports = {
         {
           // user bid product
           model: User,
-          attributes: ["id", "name", "picture", "phone_number"],
+          attributes: ["id", "name", "email", "picture", "phone_number", "address", "city"],
         },
       ],
     });
@@ -30,7 +30,7 @@ module.exports = {
         },
         {
           model: User,
-          attributes: ["id", "name", "picture", "phone_number"],
+          attributes: ["id", "name", "email", "picture", "phone_number", "address", "city"],
         },
       ],
     });
@@ -62,7 +62,7 @@ module.exports = {
         },
         {
           model: User,
-          attributes: ["id", "name", "picture", "phone_number", "address"],
+          attributes: ["id", "name", "email", "picture", "phone_number", "address", "city"],
         },
       ],
       where: {
@@ -95,7 +95,7 @@ module.exports = {
         },
         {
           model: User,
-          attributes: ["id", "name", "picture", "phone_number", "address"],
+          attributes: ["id", "name", "email", "picture", "phone_number", "address", "city"],
         },
       ],
     });
@@ -109,7 +109,7 @@ module.exports = {
         },
         {
           model: User,
-          attributes: ["id", "name", "picture", "phone_number", "address"],
+          attributes: ["id", "name", "email", "picture", "phone_number", "address", "city"],
         },
       ],
       where: {
