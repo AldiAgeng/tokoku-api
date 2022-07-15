@@ -40,6 +40,7 @@ describe("userRepository", () => {
       const mockBody = {
         name: "Budi",
         phone_number: "081234567890",
+        city: "Jakarta",
         address: "Jl. Boongan",
       };
 

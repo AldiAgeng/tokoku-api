@@ -78,6 +78,14 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      city: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            msg: "City is required",
+          },
+        },
+      },
     },
     {
       sequelize,
