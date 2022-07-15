@@ -19,6 +19,7 @@ module.exports = {
       {
         name: user.name,
         phone_number: user.phone_number,
+        city: user.city,
         address: user.address,
         picture: url,
       },
