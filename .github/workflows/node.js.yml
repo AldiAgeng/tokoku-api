@@ -60,15 +60,13 @@ jobs:
           # POSTGRES_HOST: ec2-54-147-33-38.compute-1.amazonaws.com
           # The default PostgreSQL port
           # POSTGRES_PORT: 5432
-
-          DATABASE_URL: postgres://wujtdqlghwaabr:408c99d5fa1a7991eac380a1e3ebfdb9671bfa46ec324ed1cc1a80ded4f5c78e@ec2-54-147-33-38.compute-1.amazonaws.com:5432/db03dpt7jtgse4
-          JWT_SIGNATURE_KEY: SECRET
           NODE_ENV: production
 
       - name: Test # will run `yarn build` command
         uses: borales/actions-yarn@v3.0.0
         with:
           cmd: test # will run `yarn test` command
+
 # jobs:
 #   build:
 #     name: Test
