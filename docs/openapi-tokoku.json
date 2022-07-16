@@ -41,25 +41,6 @@
                   }
                 }
               }
-            },
-            "aplication/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "User1"
-                  },
-                  "email": {
-                    "type": "string",
-                    "example": "user1@mail.com"
-                  },
-                  "password": {
-                    "type": "string",
-                    "example": "user1"
-                  }
-                }
-              }
             }
           }
         },
@@ -100,21 +81,6 @@
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string",
-                    "example": "user1@mail.com"
-                  },
-                  "password": {
-                    "type": "string",
-                    "example": "user1"
-                  }
-                }
-              }
-            },
-            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -252,29 +218,6 @@
                   }
                 }
               }
-            },
-            "aplication/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "User1"
-                  },
-                  "picture": {
-                    "type": "string",
-                    "example": "user1.jpg"
-                  },
-                  "phone_number": {
-                    "type": "integer",
-                    "example": 8899
-                  },
-                  "address": {
-                    "type": "string",
-                    "example": "Jakarta"
-                  }
-                }
-              }
             }
           }
         },
@@ -334,41 +277,6 @@
                   "picture": {
                     "type": "string",
                     "format": "binary"
-                  },
-                  "price": {
-                    "type": "integer",
-                    "example": 50000
-                  },
-                  "location": {
-                    "type": "string",
-                    "example": "Jakarta"
-                  },
-                  "description": {
-                    "type": "string",
-                    "example": "blablabla"
-                  },
-                  "status": {
-                    "type": "string",
-                    "example": "available"
-                  },
-                  "id_category_product": {
-                    "type": "integer",
-                    "example": 1
-                  }
-                }
-              }
-            },
-            "aplication/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "Book"
-                  },
-                  "picture": {
-                    "type": "string",
-                    "example": "book.jpg"
                   },
                   "price": {
                     "type": "integer",
@@ -572,37 +480,6 @@
                   "id_category_product": {
                     "type": "integer",
                     "example": 1
-                  }
-                }
-              }
-            },
-            "aplication/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "Book"
-                  },
-                  "picture": {
-                    "type": "string",
-                    "example": "book.jpg"
-                  },
-                  "price": {
-                    "type": "integer",
-                    "example": 70000
-                  },
-                  "location": {
-                    "type": "string",
-                    "example": "Jakarta"
-                  },
-                  "description": {
-                    "type": "string",
-                    "example": "blablabla"
-                  },
-                  "status": {
-                    "type": "string",
-                    "example": "sold"
                   }
                 }
               }
@@ -813,7 +690,7 @@
         ],
         "requestBody": {
           "content": {
-            "aplication/json": {
+            "application/x-www-form-urlencoded": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -973,25 +850,6 @@
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "price": {
-                    "type": "integer",
-                    "example": 50000
-                  },
-                  "status": {
-                    "type": "string",
-                    "example": "bid"
-                  },
-                  "id_product": {
-                    "type": "integer",
-                    "example": 1
-                  }
-                }
-              }
-            },
-            "aplication/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -1174,7 +1032,7 @@
         ],
         "requestBody": {
           "content": {
-            "aplication/json": {
+            "application/x-www-form-urlencoded": {
               "schema": {
                 "type": "object",
                 "properties": {

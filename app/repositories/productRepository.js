@@ -28,11 +28,11 @@ module.exports = {
       include: [
         {
           model: CategoryProduct,
-          attributes: ["name"],
+          attributes: ["id", "name"],
         },
         {
           model: User,
-          attributes: ["name", "email", "picture", "phone_number", "address", "city"],
+          attributes: ["id", "name", "email", "picture", "phone_number", "address", "city"],
         },
       ],
       where: {
