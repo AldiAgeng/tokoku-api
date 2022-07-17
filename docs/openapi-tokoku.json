@@ -212,9 +212,13 @@
                     "type": "integer",
                     "example": 8899
                   },
-                  "address": {
+                  "city": {
                     "type": "string",
                     "example": "Jakarta"
+                  },
+                  "address": {
+                    "type": "string",
+                    "example": "Jalan Raya"
                   }
                 }
               }
