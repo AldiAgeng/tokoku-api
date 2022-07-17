@@ -73,7 +73,7 @@ module.exports = {
     try {
       if (req.file) {
         const data = req.body;
-        data = req.file;
+        data.picture = req.file;
         await productServices.update(req.params.id, data);
         res.status(200).json({
           status: "success",
