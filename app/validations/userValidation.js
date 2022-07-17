@@ -19,5 +19,10 @@ module.exports = {
   ],
   loginDataValidate: [body("email", "Email is required").exists(), body("email", "Email is not valid").isEmail(), body("password", "Password is required").exists()],
 
-  updateDataValidate: [body("name", "Name is required").exists(), body("phone_number", "Phone number is required").exists(), body("city", "City is required"), body("address", "Address is required").exists()],
+  updateDataValidate: [
+    body("name", "Name is required").exists().notEmpty(),
+    body("phone_number", "Phone number is required").exists().notEmpty(),
+    body("city", "City is required").notEmpty().exists(),
+    body("address", "Address is required").exists().notEmpty(),
+  ],
 };
