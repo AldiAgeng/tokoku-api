@@ -72,8 +72,9 @@ module.exports = {
   async update(req, res) {
     try {
       if (req.file) {
-        const url = req.file.filename;
-        await productServices.update(req.params.id, req.body, url);
+        const data = req.body;
+        data = req.file;
+        await productServices.update(req.params.id, data);
         res.status(200).json({
           status: "success",
           message: "product updated successfully",

@@ -52,7 +52,7 @@ module.exports = {
       throw error;
     }
   },
-  async update(id, data, url) {
+  async update(id, data) {
     try {
       const product = await productRepository.find(id);
       if (!product) {
@@ -63,11 +63,13 @@ module.exports = {
       }
 
       if (product.picture !== null) {
-        if (url) {
-          deletePictureProduct(product.picture);
+        if (data.picture) {
+          const public_id = product.picture.replace(/(.*)([\/](\w+))(\.(jpg|png|jpeg))/gm, "$3");
+
+          await cloudinary.uploader.destroy(`products/${public_id}`);
         }
       } else {
-        if (!url) {
+        if (!data.picture) {
           throw {
             name: "badRequest",
             message: "please fill all required fields and make sure the data is valid",
@@ -75,7 +77,22 @@ module.exports = {
         }
       }
 
-      return productRepository.update(id, data, url);
+      if (!data.picture.buffer) {
+        await productRepository.update(id, data);
+      } else {
+        const fileBase64 = data.picture.buffer.toString("base64");
+        const file = `data:${data.picture.mimetype};base64,${fileBase64}`;
+        cloudinary.uploader.upload(file, { folder: "users" }, async function (error, result) {
+          if (error) {
+            throw {
+              name: "badRequest",
+              message: "please fill all required fields and make sure the data is valid",
+            };
+          } else {
+            await productRepository.update(id, data, result.url);
+          }
+        });
+      }
     } catch (error) {
       throw error;
     }
