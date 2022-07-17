@@ -1,6 +1,6 @@
 const userRepository = require("../repositories/userRepository");
 const { encryptPassword, checkPassword, createToken } = require("../utils/authUtils");
-const { deletePictureUser } = require("../utils/delete");
+const cloudinary = require("../utils/cloudinary");
 
 module.exports = {
   async register(data) {
@@ -56,7 +56,7 @@ module.exports = {
   find(id) {
     return userRepository.find(id);
   },
-  async update(id, user, url) {
+  async update(id, user) {
     try {
       const userData = await userRepository.find(id);
       if (!userData) {
@@ -67,11 +67,13 @@ module.exports = {
       }
 
       if (userData.picture !== null) {
-        if (url) {
-          deletePictureUser(userData.picture);
+        if (user.picture) {
+          const public_id = userData.picture.replace(/(.*)([\/](\w+))(\.(jpg|png|jpeg))/gm, "$3");
+
+          await cloudinary.uploader.destroy(`users/${public_id}`);
         }
       } else {
-        if (!url) {
+        if (!user.picture) {
           throw {
             name: "badRequest",
             message: "please fill all required fields and make sure the data is valid",
@@ -79,7 +81,22 @@ module.exports = {
         }
       }
 
-      return userRepository.update(id, user, url);
+      if (!user.picture) {
+        await userRepository.update(id, user);
+      } else {
+        const fileBase64 = user.picture.buffer.toString("base64");
+        const file = `data:${user.picture.mimetype};base64,${fileBase64}`;
+        cloudinary.uploader.upload(file, { folder: "users" }, async function (error, result) {
+          if (error) {
+            throw {
+              name: "badRequest",
+              message: "please fill all required fields and make sure the data is valid",
+            };
+          } else {
+            await userRepository.update(id, user, result.url);
+          }
+        });
+      }
     } catch (error) {
       throw error;
     }

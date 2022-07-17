@@ -21,8 +21,8 @@ module.exports = {
       if (req.file) {
         const user = req.user.id;
         const data = req.body;
-        const url = req.file.filename;
-        const product = await productServices.create(data, user, url);
+        data.picture = req.file;
+        const product = await productServices.create(data, user);
         res.status(200).json({
           status: "success",
           data: product,

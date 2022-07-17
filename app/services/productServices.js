@@ -1,5 +1,5 @@
 const productRepository = require("../repositories/productRepository");
-const { deletePictureProduct } = require("../utils/delete");
+const cloudinary = require("../utils/cloudinary");
 
 module.exports = {
   async findProductByUser(user) {
@@ -9,7 +9,7 @@ module.exports = {
       throw error;
     }
   },
-  async create(data, user, url) {
+  async create(data, user) {
     try {
       const count = await productRepository.countByStatusAndUser(user);
       if (count >= 4) {
@@ -19,7 +19,21 @@ module.exports = {
         };
       }
 
-      return productRepository.create(data, user, url);
+      const fileBase64 = data.picture.buffer.toString("base64");
+      const file = `data:${data.picture.mimetype};base64,${fileBase64}`;
+
+      const picture = cloudinary.uploader.upload(file, { folder: "products" }, function (error, result) {
+        if (error) {
+          throw {
+            name: "badRequest",
+            message: "please fill all required fields and make sure the data is valid",
+          };
+        } else {
+          console.log("success upload", result);
+        }
+      });
+      console.log(picture, "pc");
+      return await productRepository.create(data, user, (await picture).url);
     } catch (error) {
       throw error;
     }
@@ -77,7 +91,9 @@ module.exports = {
         };
       }
 
-      deletePictureProduct(product.picture);
+      const public_id = product.picture.replace(/(.*)([\/](\w+))(\.(jpg|png|jpeg))/gm, "$3");
+
+      await cloudinary.uploader.destroy(`products/${public_id}`);
 
       return productRepository.delete(id);
     } catch (error) {

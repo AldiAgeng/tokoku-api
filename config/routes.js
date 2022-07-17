@@ -3,7 +3,7 @@ const controllers = require("../app/controllers");
 const { userValidation, productValidation, orderValidation } = require("../app/validations");
 const checkValidate = require("../app/middlewares/checkValidate");
 const middlewares = require("../app/middlewares/authorization");
-const upload = require("../app/utils/upload");
+const uploadOnMemory = require("../app/utils/uploadOnMemory");
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("../docs/openapi-tokoku.json");
@@ -19,13 +19,14 @@ apiRouter.use("/documentation", swaggerUi.serve, swaggerUi.setup(swaggerDocument
 apiRouter.post("/api/v1/auth/register", userValidation.registerDataValidate, checkValidate, controllers.api.v1.userController.register);
 apiRouter.post("/api/v1/auth/login", userValidation.loginDataValidate, checkValidate, controllers.api.v1.userController.login);
 apiRouter.get("/api/v1/auth/user", middlewares.authorize, controllers.api.v1.userController.getCurrentUser);
-apiRouter.put("/api/v1/auth/user", middlewares.authorize, upload.uploadUser.single("picture"), userValidation.updateDataValidate, checkValidate, controllers.api.v1.userController.update);
+
+apiRouter.put("/api/v1/auth/user", middlewares.authorize, uploadOnMemory.single("picture"), userValidation.updateDataValidate, checkValidate, controllers.api.v1.userController.update);
 
 // seller product
 apiRouter.get("/api/v1/seller/product", middlewares.authorize, controllers.api.v1.productController.findProductByUser);
-apiRouter.post("/api/v1/seller/product", middlewares.authorize, upload.uploadProduct.single("picture"), productValidation.productDataValidate, checkValidate, controllers.api.v1.productController.create);
+apiRouter.post("/api/v1/seller/product", middlewares.authorize, uploadOnMemory.single("picture"), productValidation.productDataValidate, checkValidate, controllers.api.v1.productController.create);
 apiRouter.get("/api/v1/seller/product/:id", middlewares.authorize, controllers.api.v1.productController.find);
-apiRouter.put("/api/v1/seller/product/:id", middlewares.authorize, upload.uploadProduct.single("picture"), controllers.api.v1.productController.update);
+apiRouter.put("/api/v1/seller/product/:id", middlewares.authorize, uploadOnMemory.single("picture"), controllers.api.v1.productController.update);
 apiRouter.delete("/api/v1/seller/product/:id", middlewares.authorize, controllers.api.v1.productController.delete);
 
 // seller order
