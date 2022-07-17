@@ -82,7 +82,7 @@ module.exports = {
       } else {
         const fileBase64 = data.picture.buffer.toString("base64");
         const file = `data:${data.picture.mimetype};base64,${fileBase64}`;
-        cloudinary.uploader.upload(file, { folder: "users" }, async function (error, result) {
+        cloudinary.uploader.upload(file, { folder: "products" }, async function (error, result) {
           if (error) {
             throw {
               name: "badRequest",
