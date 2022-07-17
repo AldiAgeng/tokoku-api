@@ -81,7 +81,7 @@ module.exports = {
         }
       }
 
-      if (!user.picture) {
+      if (!user.picture.buffer) {
         await userRepository.update(id, user);
       } else {
         const fileBase64 = user.picture.buffer.toString("base64");
