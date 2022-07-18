@@ -24,6 +24,7 @@ module.exports = {
           ],
         },
       ],
+      order: [["updatedAt", "DESC"]],
     });
   },
   findNotificationBuyer(user) {
@@ -46,6 +47,7 @@ module.exports = {
           ],
         },
       ],
+      order: [["updatedAt", "DESC"]],
     });
   },
   findOneNotification(id) {

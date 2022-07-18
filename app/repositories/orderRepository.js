@@ -19,6 +19,7 @@ module.exports = {
           attributes: ["id", "name", "email", "picture", "phone_number", "address", "city"],
         },
       ],
+      order: [["updatedAt", "DESC"]],
     });
   },
   findById(id) {
@@ -68,6 +69,7 @@ module.exports = {
       where: {
         id_user: user,
       },
+      order: [["updatedAt", "DESC"]],
     });
   },
   updateOrder(id, data) {
@@ -98,6 +100,7 @@ module.exports = {
           attributes: ["id", "name", "email", "picture", "phone_number", "address", "city"],
         },
       ],
+      order: [["updatedAt", "DESC"]],
     });
   },
   historyBuyer(user) {
@@ -106,6 +109,9 @@ module.exports = {
         {
           model: Product,
           attributes: ["id", "name", "picture", "price", "status"],
+          where: {
+            status: "sold",
+          },
         },
         {
           model: User,
@@ -116,6 +122,7 @@ module.exports = {
         id_user: user,
         status: "accepted",
       },
+      order: [["updatedAt", "DESC"]],
     });
   },
 };

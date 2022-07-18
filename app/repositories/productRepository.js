@@ -20,6 +20,7 @@ module.exports = {
         id_user: user,
       },
       attributes: ["id", "name", "picture", "price", "location", "description", "status"],
+      order: [["createdAt", "DESC"]],
     });
   },
   // seller/product/:id / get product by id
@@ -110,6 +111,7 @@ module.exports = {
         status: "available",
       },
       attributes: ["id", "name", "picture", "price", "location", "description", "status"],
+      order: [["createdAt", "DESC"]],
     });
   },
 
@@ -134,6 +136,7 @@ module.exports = {
         status: "available",
       },
       attributes: ["id", "name", "picture", "price", "location", "description", "status"],
+      order: [["createdAt", "DESC"]],
     });
   },
   filterByProduct([product]) {
@@ -162,6 +165,7 @@ module.exports = {
         ],
       },
       attributes: ["id", "name", "picture", "price", "location", "description", "status"],
+      order: [["createdAt", "DESC"]],
     });
   },
 };
