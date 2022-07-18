@@ -77,21 +77,25 @@ module.exports = {
         }
       }
 
-      if (!data.picture.buffer) {
-        await productRepository.update(id, data);
+      if (data.picture) {
+        if (!data.picture.buffer) {
+          await productRepository.update(id, data);
+        } else {
+          const fileBase64 = data.picture.buffer.toString("base64");
+          const file = `data:${data.picture.mimetype};base64,${fileBase64}`;
+          cloudinary.uploader.upload(file, { folder: "products" }, async function (error, result) {
+            if (error) {
+              throw {
+                name: "badRequest",
+                message: "please fill all required fields and make sure the data is valid",
+              };
+            } else {
+              await productRepository.update(id, data, result.url);
+            }
+          });
+        }
       } else {
-        const fileBase64 = data.picture.buffer.toString("base64");
-        const file = `data:${data.picture.mimetype};base64,${fileBase64}`;
-        cloudinary.uploader.upload(file, { folder: "products" }, async function (error, result) {
-          if (error) {
-            throw {
-              name: "badRequest",
-              message: "please fill all required fields and make sure the data is valid",
-            };
-          } else {
-            await productRepository.update(id, data, result.url);
-          }
-        });
+        await productRepository.update(id, data);
       }
     } catch (error) {
       throw error;
