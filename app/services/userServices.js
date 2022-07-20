@@ -88,10 +88,7 @@ module.exports = {
         const file = `data:${user.picture.mimetype};base64,${fileBase64}`;
         cloudinary.uploader.upload(file, { folder: "users" }, async function (error, result) {
           if (error) {
-            throw {
-              name: "badRequest",
-              message: "please fill all required fields and make sure the data is valid",
-            };
+            return error;
           } else {
             await userRepository.update(id, user, result.url);
           }
