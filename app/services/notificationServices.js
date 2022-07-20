@@ -8,16 +8,17 @@ module.exports = {
       throw error;
     }
   },
-  findNotificationSeller(user) {
+  async findNotificationUser(user) {
     try {
-      return notificationRepository.findNotificationSeller(user.id);
-    } catch (error) {
-      throw error;
-    }
-  },
-  findNotificationBuyer(user) {
-    try {
-      return notificationRepository.findNotificationBuyer(user.id);
+      const buyer = await notificationRepository.findNotificationBuyer(user);
+      const seller = await notificationRepository.findNotificationSeller(user);
+
+      notif = [...buyer, ...seller];
+      notif.sort((a, b) => {
+        return b.updatedAt - a.updatedAt;
+      });
+
+      return notif;
     } catch (error) {
       throw error;
     }
