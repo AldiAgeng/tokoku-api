@@ -139,7 +139,7 @@ module.exports = {
       order: [["createdAt", "DESC"]],
     });
   },
-  filterByProduct([product]) {
+  filterByProduct(product) {
     return Product.findAll({
       include: [
         {

@@ -24,10 +24,7 @@ module.exports = {
 
       const picture = cloudinary.uploader.upload(file, { folder: "products" }, function (error, result) {
         if (error) {
-          throw {
-            name: "badRequest",
-            message: "please fill all required fields and make sure the data is valid",
-          };
+          return error;
         } else {
           console.log("success upload", result);
         }
@@ -85,10 +82,7 @@ module.exports = {
           const file = `data:${data.picture.mimetype};base64,${fileBase64}`;
           cloudinary.uploader.upload(file, { folder: "products" }, async function (error, result) {
             if (error) {
-              throw {
-                name: "badRequest",
-                message: "please fill all required fields and make sure the data is valid",
-              };
+              return error;
             } else {
               await productRepository.update(id, data, result.url);
             }
