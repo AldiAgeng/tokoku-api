@@ -4,12 +4,10 @@ module.exports = {
   async findNotificationByUser(req, res) {
     try {
       const user = req.user;
-      const seller = await notificationServices.findNotificationSeller(user);
-      const buyer = await notificationServices.findNotificationBuyer(user);
+      const notif = await notificationServices.findNotificationUser(user);
       res.json({
         status: "success",
-        seller,
-        buyer,
+        data: notif,
       });
     } catch (error) {
       res.status(500).json({

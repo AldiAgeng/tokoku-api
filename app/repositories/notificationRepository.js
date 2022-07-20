@@ -12,13 +12,13 @@ module.exports = {
       include: [
         {
           model: Order,
-          attributes: ["id", "status"],
+          attributes: ["id", "price", "status", "id_user"],
           include: [
             {
               model: Product,
-              attributes: ["name", "price"],
+              attributes: ["name", "price", "picture"],
               where: {
-                id_user: user,
+                id_user: user.id,
               },
             },
           ],
@@ -32,21 +32,28 @@ module.exports = {
       include: [
         {
           model: Order,
-          attributes: ["id", "status"],
+          attributes: ["id", "price", "status", "id_user"],
           where: {
-            id_user: user,
-            status: {
-              [Op.in]: ["accepted", "rejected"],
-            },
+            [Op.and]: [
+              {
+                status: {
+                  [Op.in]: ["rejected", "accepted"],
+                },
+              },
+              {
+                id_user: user.id,
+              },
+            ],
           },
           include: [
             {
               model: Product,
-              attributes: ["name", "price"],
+              attributes: ["name", "price", "picture"],
             },
           ],
         },
       ],
+
       order: [["updatedAt", "DESC"]],
     });
   },
@@ -55,11 +62,11 @@ module.exports = {
       include: [
         {
           model: Order,
-          attributes: ["id", "status"],
+          attributes: ["id", "price", "status", "id_user"],
           include: [
             {
               model: Product,
-              attributes: ["name", "price"],
+              attributes: ["name", "price", "picture"],
             },
           ],
         },
