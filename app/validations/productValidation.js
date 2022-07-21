@@ -11,5 +11,6 @@ module.exports = {
     body("status", "Status is required").exists(),
     body("status", "Status is not valid").isIn(["available", "sold"]),
     body("id_category_product", "Category is required").exists(),
+    body("id_category_product", "Category is not valid").isNumeric(),
   ],
 };

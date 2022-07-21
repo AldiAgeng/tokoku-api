@@ -29,7 +29,6 @@ module.exports = {
           console.log("success upload", result);
         }
       });
-      console.log(picture, "pc");
       return await productRepository.create(data, user, (await picture).url);
     } catch (error) {
       throw error;

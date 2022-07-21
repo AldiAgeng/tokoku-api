@@ -60,6 +60,9 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: {
             msg: "Picture is required",
           },
+          isUrl: {
+            msg: "Picture is not valid",
+          },
         },
       },
       phone_number: {
@@ -67,6 +70,9 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: {
             msg: "Phone number is required",
+          },
+          isNumeric: {
+            msg: "Phone number is not valid",
           },
         },
       },
