@@ -16,7 +16,7 @@ module.exports = {
           include: [
             {
               model: Product,
-              attributes: ["name", "price", "picture"],
+              attributes: ["name", "price", "picture", "id_user"],
               where: {
                 id_user: user.id,
               },
@@ -34,21 +34,12 @@ module.exports = {
           model: Order,
           attributes: ["id", "price", "status", "id_user"],
           where: {
-            [Op.and]: [
-              {
-                status: {
-                  [Op.in]: ["rejected", "accepted"],
-                },
-              },
-              {
-                id_user: user.id,
-              },
-            ],
+            id_user: user.id,
           },
           include: [
             {
               model: Product,
-              attributes: ["name", "price", "picture"],
+              attributes: ["name", "price", "picture", "id_user"],
             },
           ],
         },
@@ -66,7 +57,7 @@ module.exports = {
           include: [
             {
               model: Product,
-              attributes: ["name", "price", "picture"],
+              attributes: ["name", "price", "picture", "id_user"],
             },
           ],
         },

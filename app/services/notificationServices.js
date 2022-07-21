@@ -13,12 +13,7 @@ module.exports = {
       const buyer = await notificationRepository.findNotificationBuyer(user);
       const seller = await notificationRepository.findNotificationSeller(user);
 
-      notif = [...buyer, ...seller];
-      notif.sort((a, b) => {
-        return b.updatedAt - a.updatedAt;
-      });
-
-      return notif;
+      return { buyer, seller };
     } catch (error) {
       throw error;
     }
