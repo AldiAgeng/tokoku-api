@@ -119,7 +119,7 @@ module.exports = {
         }
 
         const encryptedPassword = await encryptPassword(data.new_password);
-        await userRepository.changePassword(id, encryptedPassword);
+        return userRepository.changePassword(id, encryptedPassword);
       } else {
         throw {
           name: "badRequest",
