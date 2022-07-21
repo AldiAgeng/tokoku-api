@@ -2,9 +2,10 @@ const { Notification, Order, Product } = require("../models");
 const { Op } = require("sequelize");
 
 module.exports = {
-  createNotification(data) {
+  createNotification(id, status) {
     return Notification.create({
-      id_order: data,
+      id_order: id,
+      status,
     });
   },
   findNotificationSeller(user) {
@@ -24,6 +25,9 @@ module.exports = {
           ],
         },
       ],
+      where: {
+        status: "bid",
+      },
       order: [["updatedAt", "DESC"]],
     });
   },
@@ -35,9 +39,6 @@ module.exports = {
           attributes: ["id", "price", "status", "id_user"],
           where: {
             id_user: user.id,
-            status: {
-              [Op.or]: ["accepted", "rejected"],
-            },
           },
           include: [
             {
@@ -47,7 +48,11 @@ module.exports = {
           ],
         },
       ],
-
+      where: {
+        status: {
+          [Op.in]: ["accepted", "rejected"],
+        },
+      },
       order: [["updatedAt", "DESC"]],
     });
   },

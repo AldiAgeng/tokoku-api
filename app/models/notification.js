@@ -31,6 +31,13 @@ module.exports = (sequelize, DataTypes) => {
           isIn: [[true, false]],
         },
       },
+      status: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: true,
+          isIn: [["accepted", "rejected", "bid"]],
+        },
+      },
     },
     {
       sequelize,

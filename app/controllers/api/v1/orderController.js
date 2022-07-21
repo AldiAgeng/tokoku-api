@@ -8,7 +8,7 @@ module.exports = {
       const product = await orderServices.findBidProduct(user);
       res.json({
         status: "success",
-        product,
+        data: product,
       });
     } catch (error) {
       res.status(500).json({
@@ -23,7 +23,7 @@ module.exports = {
       const order = await orderServices.findById(id);
       res.json({
         status: "success",
-        order,
+        data: order,
       });
     } catch (error) {
       if (error.name === "orderNotFound") {
@@ -44,7 +44,7 @@ module.exports = {
       const id = req.params.id;
       const data = req.body;
       await orderServices.updateStatus(id, data);
-      await notificationServices.createNotification(id);
+      await notificationServices.createNotification(id, data);
       res.json({
         status: "success",
         message: "order updated successfully",
@@ -76,10 +76,10 @@ module.exports = {
       const user = req.user;
       console.log(data, "data order");
       const order = await orderServices.createOrder(data, user);
-      await notificationServices.createNotification(order.id);
+      await notificationServices.createNotification(order.id, data);
       res.json({
         status: "success",
-        order,
+        data: order,
       });
     } catch (error) {
       if (error.name === "sequelizeValidationError") {
@@ -102,7 +102,7 @@ module.exports = {
       const orders = await orderServices.findOrderByUser(user);
       res.json({
         status: "success",
-        orders,
+        data: orders,
       });
     } catch (error) {
       res.status(500).json({
@@ -115,9 +115,9 @@ module.exports = {
   async updateOrder(req, res) {
     try {
       const id = req.params.id;
-      const data = req.body.price;
+      const data = req.body;
       await orderServices.updateOrder(id, data);
-      await notificationServices.createNotification(id);
+      await notificationServices.createNotification(id, "bid");
       res.json({
         status: "success",
         message: "order updated successfully",
@@ -150,8 +150,10 @@ module.exports = {
       const buyer = await orderServices.historyBuyer(user);
       res.json({
         status: "success",
-        Seller: seller,
-        Buyer: buyer,
+        data: {
+          seller,
+          buyer,
+        },
       });
     } catch (error) {
       res.status(500).json({
@@ -167,7 +169,7 @@ module.exports = {
       const order = await orderServices.findById(id);
       res.json({
         status: "success",
-        order,
+        data: order,
       });
     } catch (error) {
       if (error.name === "orderNotFound") {
