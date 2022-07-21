@@ -42,7 +42,10 @@ module.exports = (sequelize, DataTypes) => {
             msg: "Status is required",
           },
           isIn: {
-            args: [["bid", "canceled", "accepted", "rejected"]],
+            args: [["bid", "accepted", "rejected"]],
+            msg: "Status is not valid",
+          },
+          isAlpha: {
             msg: "Status is not valid",
           },
         },
@@ -53,6 +56,9 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: {
             msg: "Product is required",
           },
+          isNumeric: {
+            msg: "Product is not valid",
+          },
         },
       },
       id_user: {
@@ -60,6 +66,9 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: {
             msg: "User is required",
+          },
+          isNumeric: {
+            msg: "User is not valid",
           },
         },
       },

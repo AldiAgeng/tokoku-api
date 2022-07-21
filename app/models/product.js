@@ -38,6 +38,9 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: {
             msg: "Picture is required",
           },
+          isUrl: {
+            msg: "Picture is not valid",
+          },
         },
       },
       price: {
@@ -85,6 +88,9 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: {
             msg: "Category is required",
           },
+          isNumeric: {
+            msg: "Category is not valid",
+          },
         },
       },
       id_user: {
@@ -92,6 +98,9 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: {
             msg: "User is required",
+          },
+          isNumeric: {
+            msg: "User is not valid",
           },
         },
       },
