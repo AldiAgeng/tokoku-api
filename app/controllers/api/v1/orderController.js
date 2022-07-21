@@ -74,6 +74,7 @@ module.exports = {
     try {
       const data = req.body;
       const user = req.user;
+      console.log(data, "data order");
       const order = await orderServices.createOrder(data, user);
       await notificationServices.createNotification(order.id);
       res.json({

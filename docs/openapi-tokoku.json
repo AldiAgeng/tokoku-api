@@ -262,6 +262,72 @@
         }
       }
     },
+    "/api/v1/auth/user/password": {
+      "put": {
+        "tags": ["auth"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Update user password",
+        "description": "Updating user password",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "old_password": {
+                    "type": "string",
+                    "example": "user1"
+                  },
+                  "new_password": {
+                    "type": "string",
+                    "example": "user1"
+                  },
+                  "confirm_password": {
+                    "type": "string",
+                    "example": "user1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "data updated"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "user updated successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
     "/api/v1/seller/product": {
       "post": {
         "tags": ["seller"],
@@ -1376,6 +1442,55 @@
             "description": "Internal Service Error"
           }
         }
+      },
+      "patch": {
+        "tags": ["notification"],
+        "summary": "Update notification by ID",
+        "description": "Update Notification by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "notification updated successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
       }
     }
   },
@@ -1773,8 +1888,8 @@
             "example": 5
           },
           "id_order": {
-            "type": "string",
-            "example": "Kesehatan"
+            "type": "integer",
+            "example": 1
           },
           "createdAt": {
             "type": "string"

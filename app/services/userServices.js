@@ -98,4 +98,36 @@ module.exports = {
       throw error;
     }
   },
+  async changePassword(id, data) {
+    try {
+      const user = await userRepository.find(id);
+      if (!user) {
+        throw {
+          name: "userNotFound",
+          message: "User is not found",
+        };
+      }
+
+      if (data.new_password === data.confirm_password) {
+        // equals password and confirmPassword
+        const passwordCompare = await checkPassword(user.password, data.old_password);
+        if (!passwordCompare) {
+          throw {
+            name: "badRequest",
+            message: "old password is wrong",
+          };
+        }
+
+        const encryptedPassword = await encryptPassword(data.new_password);
+        await userRepository.changePassword(id, encryptedPassword);
+      } else {
+        throw {
+          name: "badRequest",
+          message: "new password and confirm password are not equals",
+        };
+      }
+    } catch (error) {
+      throw error;
+    }
+  },
 };
