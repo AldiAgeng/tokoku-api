@@ -1,4 +1,5 @@
 const { Notification, Order, Product } = require("../models");
+const { Op } = require("sequelize");
 
 module.exports = {
   createNotification(data) {
