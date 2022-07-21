@@ -8,7 +8,11 @@
   "servers": [
     {
       "url": "https://tokoku-api.herokuapp.com",
-      "description": "Main (production) server"
+      "description": "Main (production) server 1"
+    },
+    {
+      "url": "https://tokoku-api-2.herokuapp.com",
+      "description": "Main (production) server 2"
     },
     {
       "url": "http://localhost:8000",
