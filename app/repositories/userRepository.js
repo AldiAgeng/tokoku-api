@@ -30,4 +30,16 @@ module.exports = {
       }
     );
   },
+  changePassword(id, password) {
+    return User.update(
+      {
+        password,
+      },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+  },
 };

@@ -32,4 +32,18 @@ module.exports = {
       throw error;
     }
   },
+  async updateNotification(id) {
+    try {
+      const notification = await notificationRepository.findOneNotification(id);
+      if (!notification) {
+        throw {
+          name: "notificationNotFound",
+          message: "Notification not found",
+        };
+      }
+      return notificationRepository.updateNotification(id);
+    } catch (error) {
+      throw error;
+    }
+  },
 };

@@ -28,4 +28,12 @@ module.exports = {
     body("city", "City is required").exists(),
     body("address", "Address is required").exists(),
   ],
+
+  changePasswordDataValidate: [
+    body("new_password", "Password is required").exists(),
+    body("new_password", "Password must be at least 6 characters long").isLength({ min: 6 }),
+    body("new_password", "Password must contain at least one number, one uppercase, one lowercase letter and one special character").isStrongPassword(),
+
+    body("confirm_password", "Password is required").exists(),
+  ],
 };

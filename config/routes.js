@@ -19,8 +19,8 @@ apiRouter.use("/documentation", swaggerUi.serve, swaggerUi.setup(swaggerDocument
 apiRouter.post("/api/v1/auth/register", userValidation.registerDataValidate, checkValidate, controllers.api.v1.userController.register);
 apiRouter.post("/api/v1/auth/login", userValidation.loginDataValidate, checkValidate, controllers.api.v1.userController.login);
 apiRouter.get("/api/v1/auth/user", middlewares.authorize, controllers.api.v1.userController.getCurrentUser);
-
 apiRouter.put("/api/v1/auth/user", middlewares.authorize, uploadOnMemory.single("picture"), userValidation.updateDataValidate, checkValidate, controllers.api.v1.userController.update);
+apiRouter.put("/api/v1/auth/user/password", middlewares.authorize, userValidation.changePasswordDataValidate, checkValidate, controllers.api.v1.userController.changePassword);
 
 // seller product
 apiRouter.get("/api/v1/seller/product", middlewares.authorize, controllers.api.v1.productController.findProductByUser);
@@ -55,6 +55,7 @@ apiRouter.get("/api/v1/history/:id", middlewares.authorize, controllers.api.v1.o
 // notification
 apiRouter.get("/api/v1/notification", middlewares.authorize, controllers.api.v1.notificationController.findNotificationByUser);
 apiRouter.get("/api/v1/notification/:id", middlewares.authorize, controllers.api.v1.notificationController.findOneNotification);
+apiRouter.patch("/api/v1/notification/:id", middlewares.authorize, controllers.api.v1.notificationController.updateNotification);
 
 /**
  * TODO: Delete this, this is just a demonstration of

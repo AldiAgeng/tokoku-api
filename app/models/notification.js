@@ -23,6 +23,14 @@ module.exports = (sequelize, DataTypes) => {
           isNumeric: true,
         },
       },
+      is_read: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        validate: {
+          notEmpty: true,
+          isIn: [[true, false]],
+        },
+      },
     },
     {
       sequelize,

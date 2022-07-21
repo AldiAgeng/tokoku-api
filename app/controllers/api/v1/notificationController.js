@@ -38,4 +38,26 @@ module.exports = {
       }
     }
   },
+  async updateNotification(req, res) {
+    try {
+      const id = req.params.id;
+      await notificationServices.updateNotification(id);
+      res.json({
+        status: "success",
+        message: "notification updated successfully",
+      });
+    } catch (error) {
+      if (error.name === "notificationNotFound") {
+        res.status(404).json({
+          name: error.name,
+          message: error.message,
+        });
+      } else {
+        res.status(500).json({
+          name: error.name,
+          message: error.message,
+        });
+      }
+    }
+  },
 };

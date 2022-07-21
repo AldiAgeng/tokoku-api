@@ -100,4 +100,26 @@ module.exports = {
       }
     }
   },
+  async changePassword(req, res) {
+    try {
+      const data = req.body;
+      await userServices.changePassword(req.user.id, data);
+      res.status(200).json({
+        status: "success",
+        message: "password changed successfully",
+      });
+    } catch (error) {
+      if (error.name === "badRequest" || error.name === "SequelizeValidationError") {
+        res.status(400).json({
+          name: error.name,
+          message: error.message,
+        });
+      } else {
+        res.status(500).json({
+          name: error.name,
+          message: error.message,
+        });
+      }
+    }
+  },
 };
