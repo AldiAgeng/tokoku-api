@@ -1,9 +1,13 @@
 const notificationRepository = require("../repositories/notificationRepository");
 
 module.exports = {
-  createNotification(data) {
+  createNotification(id, data) {
     try {
-      return notificationRepository.createNotification(data);
+      if (data.status !== "") {
+        return notificationRepository.createNotification(id, data.status);
+      } else {
+        return notificationRepository.createNotification(id, "bid");
+      }
     } catch (error) {
       throw error;
     }
