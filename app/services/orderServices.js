@@ -62,7 +62,7 @@ module.exports = {
           message: "Order is not found",
         };
       }
-      return await orderRepository.updateOrder(id, data);
+      return await orderRepository.updateOrder(id, data.price);
     } catch (error) {
       throw error;
     }
