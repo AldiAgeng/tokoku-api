@@ -44,11 +44,11 @@ module.exports = {
       const id = req.params.id;
       const data = req.body;
       await orderServices.updateStatus(id, data);
-      await notificationServices.createNotification(id, data);
       res.json({
         status: "success",
         message: "order updated successfully",
       });
+      await notificationServices.createNotification(req.params.id, data);
     } catch (error) {
       if (error.name === "orderNotFound") {
         res.status(404).json({
@@ -74,13 +74,12 @@ module.exports = {
     try {
       const data = req.body;
       const user = req.user;
-      console.log(data, "data order");
       const order = await orderServices.createOrder(data, user);
-      await notificationServices.createNotification(order.id, data);
       res.json({
         status: "success",
         data: order,
       });
+      await notificationServices.createNotification(order.id, data);
     } catch (error) {
       if (error.name === "sequelizeValidationError") {
         res.status(400).json({
@@ -117,11 +116,11 @@ module.exports = {
       const id = req.params.id;
       const data = req.body;
       await orderServices.updateOrder(id, data);
-      await notificationServices.createNotification(id, "bid");
       res.json({
         status: "success",
         message: "order updated successfully",
       });
+      await notificationServices.createNotification(req.params.id, "bid");
     } catch (error) {
       if (error.name === "orderNotFound") {
         res.status(404).json({
