@@ -44,7 +44,7 @@ describe("userRepository", () => {
         address: "Jl. Boongan",
       };
 
-      const user = await userRepository.update(1, mockBody, "picture");
+      const user = await userRepository.update(1, mockBody);
 
       expect(user.length).toBe(1);
       expect(user).toBeDefined();

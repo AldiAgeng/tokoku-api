@@ -1,5 +1,5 @@
 const productServices = require("../productServices");
-
+const fs = require("fs");
 const { sequelize } = require("../../models");
 
 const { queryInterface } = sequelize;
@@ -41,16 +41,18 @@ describe("productServices", () => {
     //     description: "Sepatu futsal putih, bahan berkualitas",
     //     id_category_product: 1,
     //     picture: {
-    //       url: "https://res.cloudinary.com/dzqbzqgqy/image/upload/v1598410001/products/sepatu_futsal_putih_qjqjqj.jpg",
-    //       buffer: "",
-    //       mimetype: "",
+    //       buffer: fs.readFile("./app/services/test/baju-windah.jpg", "base64", (err, data) => {
+    //         return data;
+    //       }),
+    //       mimetype: "image/jpeg",
     //     },
     //   };
+
+    //   console.log(data, "data");
 
     //   const id_user = 1;
 
     //   const product = await productServices.create(data, id_user);
-
     //   expect(product).toBeDefined();
     // });
 
@@ -79,20 +81,11 @@ describe("productServices", () => {
         expect(error).toHaveProperty("message");
       }
     });
-    // it("should return data product", async () => {
-    //   const data = {
-    //     id: 2,
-    //   };
-
-    //   const product = await productServices.find(data);
-
-    //   expect(product).toBeDefined();
-    // });
   });
 
   describe("update", () => {
     // it("should return data product", async () => {
-    //   const id = 2;
+    //   const id = 3;
     //   const data = {
     //     name: "Sepatu Futsal Putih",
     //     price: 1000,
@@ -100,13 +93,17 @@ describe("productServices", () => {
     //     status: "available",
     //     description: "Sepatu futsal putih, bahan berkualitas",
     //     id_category_product: 1,
+    //     picture: {
+    //       buffer: fs.readFile("./app/services/test/baju-windah.jpg", "base64", (err, data) => {
+    //         return data;
+    //       }),
+    //       mimetype: "image/jpeg",
+    //     },
     //   };
 
-    //   const url = "http://localhost:3000/products/1";
+    //   const product = await productServices.update(id, data);
 
-    //   const product = await productServices.update(id, data, url);
-
-    //   expect(product).toBeDefined();
+    //   expect(product).toBeUndefined();
     // });
 
     it("should return error product not found", async () => {

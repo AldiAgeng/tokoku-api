@@ -1,11 +1,25 @@
 const notificationServices = require("../notificationServices");
 
+const { sequelize } = require("../../models");
+
+const { queryInterface } = sequelize;
+
+afterAll(async () => {
+  await queryInterface.bulkDelete("Notifications", null, {
+    truncate: true,
+    restartIdentity: true,
+  });
+});
+
 describe("notificationServices", () => {
   describe("createNotification", () => {
     it("should return data notification", async () => {
       const id_order = 1;
+      const data = {
+        status: "bid",
+      };
 
-      const notification = await notificationServices.createNotification(id_order);
+      const notification = await notificationServices.createNotification(id_order, data);
 
       expect(notification).toBeDefined();
     });
@@ -20,41 +34,22 @@ describe("notificationServices", () => {
     });
   });
 
-  describe("findNotificationSeller", () => {
+  describe("findNotificationUser", () => {
     it("should return data notification", async () => {
       const user = {
         id: 1,
       };
 
-      const notification = await notificationServices.findNotificationSeller(user);
+      const buyer = await notificationServices.findNotificationUser(user);
+      const seller = await notificationServices.findNotificationUser(user);
 
-      expect(notification).toBeDefined();
+      expect(buyer).toBeDefined();
+      expect(seller).toBeDefined();
     });
 
     it("should throw error", async () => {
       try {
-        await notificationServices.findNotificationSeller();
-      } catch (error) {
-        expect(error).toHaveProperty("name");
-        expect(error).toHaveProperty("message");
-      }
-    });
-  });
-
-  describe("findNotificationBuyer", () => {
-    it("should return data notification", async () => {
-      const user = {
-        id: 1,
-      };
-
-      const notification = await notificationServices.findNotificationBuyer(user);
-
-      expect(notification).toBeDefined();
-    });
-
-    it("should throw error", async () => {
-      try {
-        await notificationServices.findNotificationBuyer();
+        await notificationServices.findNotificationUser();
       } catch (error) {
         expect(error).toHaveProperty("name");
         expect(error).toHaveProperty("message");
@@ -64,7 +59,7 @@ describe("notificationServices", () => {
 
   describe("findOneNotification", () => {
     it("should return data notification", async () => {
-      const id = 1;
+      id = 1;
 
       const notification = await notificationServices.findOneNotification(id);
 
@@ -78,7 +73,25 @@ describe("notificationServices", () => {
       } catch (error) {
         expect(error).toHaveProperty("name");
         expect(error).toHaveProperty("message");
-        expect(error.name).toBe("notificationNotFound");
+      }
+    });
+  });
+
+  describe("updateNotification", () => {
+    it("should return data notification", async () => {
+      const id = 1;
+
+      const notification = await notificationServices.updateNotification(id);
+
+      expect(notification).toBeDefined();
+    });
+
+    it("should throw error notificationNotFound", async () => {
+      try {
+        await notificationServices.updateNotification(999);
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
       }
     });
   });

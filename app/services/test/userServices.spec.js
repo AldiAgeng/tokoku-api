@@ -1,5 +1,6 @@
 const userServices = require("../userServices");
 const { sequelize } = require("../../models");
+const fs = require("fs");
 
 const { queryInterface } = sequelize;
 
@@ -108,24 +109,31 @@ describe("userServices", () => {
   });
 
   describe("update", () => {
-    // it("should return data user", async () => {
-    //   const id = 1;
-    //   const user = {
-    //     name: "Ujang",
-    //     city: "Jakarta",
-    //     address: "Jl. Raya",
-    //     phone_number: "081234567890",
-    //     picture: {
-    //       name: "ujang.jpg",
-    //       buffer: "",
-    //       mimetype: ".jpg",
-    //     },
-    //   };
+    it("should return data user", async () => {
+      const buff = fs.readFile("./app/services/test/cat.png", function (err, data) {
+        if (err) {
+          throw err;
+        }
 
-    //   const result = await userServices.update(id, user);
+        return data;
+      });
 
-    //   expect(result).toBeDefined();
-    // });
+      const id = 2;
+      const user = {
+        name: "Ujang",
+        city: "Jakarta",
+        address: "Jl. Raya",
+        phone_number: "081234567890",
+        picture: {
+          mimetype: "image/png",
+          buffer: buff,
+        },
+      };
+
+      const result = await userServices.update(id, user);
+
+      expect(result).toBeUndefined();
+    });
 
     it("should throw error userNotFound", async () => {
       try {
@@ -138,6 +146,21 @@ describe("userServices", () => {
 
         await userServices.update(id, user, url);
 
+        expect(true).toBe(false);
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
+      }
+    });
+
+    it("should throw error badRequest", async () => {
+      try {
+        const id = 1;
+        const user = {
+          name: "Ujang",
+        };
+
+        await userServices.update(id, user);
         expect(true).toBe(false);
       } catch (error) {
         expect(error).toHaveProperty("name");
@@ -158,6 +181,75 @@ describe("userServices", () => {
         const data = await userServices.update(user, url);
 
         expect(data).toBeDefined();
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
+      }
+    });
+  });
+
+  describe("changePassword", () => {
+    it("should return data user", async () => {
+      const id = 1;
+      const data = {
+        new_password: "123456",
+        old_password: "123456",
+        confirm_password: "123456",
+      };
+
+      const result = await userServices.changePassword(id, data);
+
+      expect(result).toBeDefined();
+    });
+
+    it("should throw error userNotFound", async () => {
+      try {
+        const id = 1000;
+        const data = {
+          new_password: "123456",
+          old_password: "123456",
+          confirm_password: "123456",
+        };
+
+        await userServices.changePassword(id, data);
+
+        expect(true).toBe(false);
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
+      }
+    });
+
+    it("should throw error error new password & confirm password not equals", async () => {
+      try {
+        const id = 1;
+        const data = {
+          new_password: "123456",
+          old_password: "123456",
+          confirm_password: "1234567",
+        };
+
+        await userServices.changePassword(id, data);
+
+        expect(true).toBe(false);
+      } catch (error) {
+        expect(error).toHaveProperty("name");
+        expect(error).toHaveProperty("message");
+      }
+    });
+
+    it("should throw error error old password not equals", async () => {
+      try {
+        const id = 1;
+        const data = {
+          new_password: "123456",
+          old_password: "1234567",
+          confirm_password: "123456",
+        };
+
+        await userServices.changePassword(id, data);
+
+        expect(true).toBe(false);
       } catch (error) {
         expect(error).toHaveProperty("name");
         expect(error).toHaveProperty("message");

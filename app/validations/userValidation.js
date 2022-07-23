@@ -15,8 +15,8 @@ module.exports = {
       }
     }),
     // password
-    body("password").exists().withMessage("Password is required").isLength({ min: 6 }).withMessage("Password must be at least 6 characters long"),
-    body("password").isStrongPassword().withMessage("Password must contain at least one number, one uppercase, one lowercase letter and one special character"),
+    body("password").exists().withMessage("Password is required"),
+    body("password").isStrongPassword().withMessage("Password must contain at least 8 characters long, one number, one uppercase, one lowercase letter and one special character"),
   ],
   loginDataValidate: [body("email", "Email is required").exists(), body("email", "Email is not valid").isEmail(), body("password", "Password is required").exists()],
 
@@ -31,8 +31,7 @@ module.exports = {
 
   changePasswordDataValidate: [
     body("new_password", "Password is required").exists(),
-    body("new_password", "Password must be at least 6 characters long").isLength({ min: 6 }),
-    body("new_password", "Password must contain at least one number, one uppercase, one lowercase letter and one special character").isStrongPassword(),
+    body("new_password", "Password must contain at least 8 characters long, one number, one uppercase, one lowercase letter and one special character").isStrongPassword(),
 
     body("confirm_password", "Password is required").exists(),
   ],
