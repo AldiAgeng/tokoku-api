@@ -15,10 +15,6 @@
       "description": "Main (production) server 2"
     },
     {
-      "url": "https://tokoku-api-2.herokuapp.com",
-      "description": "Main (production) server 2"
-    },
-    {
       "url": "https://easy-school-uniform-ant.cyclic.app/",
       "description": "Main (production) server Backup"
     },
